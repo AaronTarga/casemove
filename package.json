@@ -93,13 +93,18 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "nombersDev",
+      "owner": "AaronTarga",
       "repo": "casemove"
     }
   },
   "author": {
     "name": "Nombers"
   },
+  "contributors" : [
+  {
+    "name" : "AaronTarga"
+  }
+  ],
   "jest": {
     "testURL": "http://localhost/",
     "testEnvironment": "jsdom",
@@ -243,7 +248,7 @@
     "update-electron-app": "^2.0.1",
     "xmldom": "^0.6.0"
   },
-  "devEngines": {
+  "engines": {
     "node": ">=14.x",
     "npm": ">=7.x"
   },

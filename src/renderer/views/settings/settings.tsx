@@ -10,6 +10,7 @@ import {
   setCurrencyValue,
   setDevmode,
   setSteamLoginShow,
+  setFastMove,
 } from 'renderer/store/actions/settings';
 
 const sources = [
@@ -196,6 +197,14 @@ export default function settingsPage() {
   );
 
   // Fastmove
+  // Fastmove
+  async function updateFastMove() {
+    const correctValue = !(await window.electron.store.get('fastmove'));
+    setFastMoveStatus(correctValue);
+    await window.electron.store.set('fastmove', correctValue);
+    dispatch(setFastMove(correctValue));
+  }
+  const [fastMoveStatus, setFastMoveStatus] = useState(settingsData.fastMove);
 
   // Dark mode
   async function updateDevMode() {
@@ -341,24 +350,21 @@ export default function settingsPage() {
                               <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                 <span className="flex-grow"></span>
                                 <span className="flex items-center ml-4 flex-shrink-0">
-                                  <p className="text-dark-white">
-                                    Skinledger only
-                                  </p>
-                                  <LockClosedIcon className="h-5 w-5 text-dark-white" />
                                   <Switch
                                     checked={window.electron.store.get(
                                       'fastmove'
                                     )}
+                                    onChange={() => updateFastMove()}
                                     className={classNames(
-                                      false
+                                      fastMoveStatus
                                         ? 'bg-indigo-600 dark:bg-indigo-700'
                                         : 'bg-gray-200',
-                                      'relative inline-flex mr-3 opacity-50 flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none'
+                                      'relative inline-flex mr-3 flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none'
                                     )}
                                   >
                                     <span
                                       className={classNames(
-                                        false
+                                        fastMoveStatus
                                           ? 'translate-x-5'
                                           : 'translate-x-0',
                                         'pointer-events-none relative inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200'
@@ -366,7 +372,7 @@ export default function settingsPage() {
                                     >
                                       <span
                                         className={classNames(
-                                          false
+                                          fastMoveStatus
                                             ? 'opacity-0 ease-out duration-100'
                                             : 'opacity-100 ease-in duration-200',
                                           'absolute inset-0 h-full w-full flex items-center justify-center transition-opacity'
@@ -389,7 +395,7 @@ export default function settingsPage() {
                                       </span>
                                       <span
                                         className={classNames(
-                                          false
+                                          fastMoveStatus
                                             ? 'opacity-100 ease-in duration-200'
                                             : 'opacity-0 ease-out duration-100',
                                           'absolute inset-0 h-full w-full flex items-center justify-center transition-opacity'

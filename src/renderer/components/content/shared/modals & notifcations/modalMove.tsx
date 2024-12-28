@@ -15,7 +15,6 @@ import {
   moveFromClearAll,
   moveFromReset,
 } from 'renderer/store/actions/moveFromActions';
-import { Link } from 'react-router-dom';
 
 export default function MoveModal() {
   const waitTime = 100;
@@ -24,6 +23,7 @@ export default function MoveModal() {
   const [seenStorage, setStorage] = useState('');
   const dispatch = useDispatch();
   const modalData = useSelector((state: any) => state.modalMoveReducer);
+  const settingsData = useSelector((state: any) => state.settingsReducer);
   async function cancelMe() {
     window.electron.ipcRenderer.refreshInventory();
     dispatch(closeMoveModal());
@@ -40,7 +40,7 @@ export default function MoveModal() {
     dispatch(moveModalResetPayload());
   }
 
-  const fastMode = false;
+  const fastMode = settingsData.fastMove;
 
   async function runModal() {
     if (modalData.moveOpen) {
@@ -175,23 +175,7 @@ export default function MoveModal() {
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
                       Please wait while the app moves your items.
-                      {fastMode == false ? (
-                        <p>
-                          Want to speed up the process? Use fastmove in{' '}
-                          <Link
-                            to={{
-                              pathname: "https://skinledger.com",
-                            }}
-                            target="_blank"
-                          >
-                            {' '}
-                            Skinledger
-                          </Link>{' '}
-                          for faster moving.
-                        </p>
-                      ) : (
-                        ''
-                      )}
+                      {fastMode == false ? ' \nWant to speed this up? Enable fastmove in the settings.': ''}
                     </p>
 
                     {modalData.totalFailed == 0 ? (

@@ -995,7 +995,12 @@ async function settingsSetup() {
       setValue('devmode', false);
     }
   });
-  setValue('fastmove', false);
+  getValue('fastmove').then((returnValue) => {
+    if (returnValue == undefined) {
+      console.log('fastmove', returnValue);
+      setValue('fastmove', false);
+    }
+  });
 }
 settingsSetup();
 
