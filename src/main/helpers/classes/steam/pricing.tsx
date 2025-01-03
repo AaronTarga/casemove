@@ -124,7 +124,7 @@ class runItems {
 
     if (this.prices[itemNamePricing] !== undefined) {
       let pricingDict = {
-        buff163: this.prices[itemNamePricing]?.buff163.starting_at?.price,
+        buff163: this.prices[itemNamePricing]?.buff163?.starting_at?.price,
         steam_listing: this.prices[itemNamePricing]?.steam?.last_90d,
         skinport: this.prices[itemNamePricing]?.skinport?.starting_at,
         bitskins: 0,
@@ -144,7 +144,7 @@ class runItems {
       }
       if (
         this.prices[itemNamePricing]?.steam?.last_7d == 0 &&
-        this.prices[itemNamePricing]?.buff163.starting_at?.price > 2000
+        this.prices[itemNamePricing]?.buff163?.starting_at?.price > 2000
       ) {
         pricingDict.steam_listing = this.prices[itemNamePricing]?.buff163.starting_at?.price * 0.8;
       }
