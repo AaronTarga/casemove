@@ -2,9 +2,9 @@ const fs = require('fs');
 const VDF = require('@node-steam/vdf');
 const axios = require('axios');
 
-const itemsLink = 'files.skinledger.com/counterstrike/items_game.txt';
+const itemsLink = 'https://github.com/SteamDatabase/GameTracking-CS2/blob/master/game/csgo/pak01_dir/scripts/items/items_game.txt';
 const translationsLink =
-  'https://files.skinledger.com/counterstrike/csgo_english.txt';
+  'https://raw.githubusercontent.com/SteamDatabase/GameTracking-CS2/refs/heads/master/game/csgo/pak01_dir/resource/csgo_english.txt';
 
 function fileCatcher(endNote) {
   return `${csgo_install_directory}${endNote}`;
@@ -463,7 +463,7 @@ class items {
     // Weapons and knifes
     if (storageRow['paint_index'] !== undefined) {
       var skinPatternName = this.getPaintDetails(storageRow['paint_index']);
-      var imageInventory = `econ/default_generated/${defIndexresult['name']}_${skinPatternName['name']}_light_large`;
+      var imageInventory = `econ/default_generated/${defIndexresult['name']}_${skinPatternName['name']}_light`;
     } else if (defIndexresult['baseitem'] == 1) {
       var imageInventory = `econ/weapons/base_weapons/${defIndexresult['name']}`;
     }
