@@ -2,7 +2,7 @@ const fs = require('fs');
 const VDF = require('@node-steam/vdf');
 const axios = require('axios');
 
-const itemsLink = 'https://github.com/SteamDatabase/GameTracking-CS2/blob/master/game/csgo/pak01_dir/scripts/items/items_game.txt';
+const itemsLink = 'https://raw.githubusercontent.com/SteamDatabase/GameTracking-CS2/refs/heads/master/game/csgo/pak01_dir/scripts/items/items_game.txt';
 const translationsLink =
   'https://raw.githubusercontent.com/SteamDatabase/GameTracking-CS2/refs/heads/master/game/csgo/pak01_dir/resource/csgo_english.txt';
 
@@ -72,6 +72,10 @@ async function updateItems(items) {
       dict_to_write['music_kits'] = updateItemsLoop(
         jsonData,
         'music_definitions'
+      );
+      dict_to_write['keychains'] = updateItemsLoop(
+        jsonData,
+        'keychain_definitions'
       );
       dict_to_write['graffiti_tints'] = updateItemsLoop(
         jsonData,
