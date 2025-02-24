@@ -39,3 +39,6 @@ src/renderer/store/actions/modalPurchase Actions.tsx
 src/renderer/store/actions/purchaseActions.tsx
 *.pfx
 *.cert
+
+inventory.txt
+game.json

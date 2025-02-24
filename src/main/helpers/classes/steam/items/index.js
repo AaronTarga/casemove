@@ -152,6 +152,10 @@ class items {
       if (graffitiTint) {
         value.graffiti_tint = graffitiTint.readUInt32LE(0);
       }
+      let keychainIndexBytes = getAttributeValueBytes(value, 299)
+      if (keychainIndexBytes) {
+        value.keychain_index = keychainIndexBytes.readUInt32LE(0);
+      }
       if (
         (value['casket_id'] !== undefined && isCasket == false) ||
         ['17293822569110896676', '17293822569102708641'].includes(value['id'])
@@ -432,6 +436,17 @@ class items {
       var finalName = finalName.replace('Swat', 'SWAT');
     }
 
+    // Keychain check only if not main item TODO: for item_name add keychain like stickers info
+    if (!baseOne && storageRow['keychain_index'] !== undefined) {
+      const keychainIndex = storageRow['keychain_index'];
+      const keyChainResult = this.getKeyChains(keychainIndex);
+      let nameToUse =
+        'Charm | ' + this.getTranslation(keyChainResult['loc_name']);
+
+      return nameToUse;
+    }
+
+
     return finalName;
   }
 
@@ -472,6 +487,12 @@ class items {
       var imageInventory = `econ/default_generated/${defIndexresult['name']}_${skinPatternName['name']}_light`;
     } else if (defIndexresult['baseitem'] == 1) {
       var imageInventory = `econ/weapons/base_weapons/${defIndexresult['name']}`;
+    }
+
+    if (!imageInventory && storageRow['keychain_index'] !== undefined) {
+      const keychainIndex = storageRow['keychain_index'];
+      const localKeychains = this.getKeyChains(keychainIndex);
+      return localKeychains['image_inventory'];
     }
 
     return imageInventory;
@@ -562,6 +583,10 @@ class items {
 
   getMusicKits(musicIndex) {
     return this.csgoItems['music_kits'][musicIndex];
+  }
+
+  getKeyChains(keychainIndex) {
+    return this.csgoItems['keychains'][keychainIndex];
   }
 
   getGraffitiKitName(graffitiID) {

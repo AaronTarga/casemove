@@ -229,7 +229,7 @@
     "electron-updater": "^4.3.9",
     "fernet": "^0.4.0",
     "find-process": "^1.4.7",
-    "globaloffensive": "^3.1.0",
+    "globaloffensive": "^3.2.0",
     "history": "4.x.x",
     "inherits": "^2.0.4",
     "lodash": "^4.17.21",
