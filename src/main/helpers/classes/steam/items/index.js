@@ -2,16 +2,10 @@ const fs = require('fs');
 const VDF = require('@node-steam/vdf');
 const axios = require('axios');
 
-<<<<<<< HEAD
-const itemsLink =
-  'https://raw.githubusercontent.com/SteamDatabase/GameTracking-CSGO/master/csgo/scripts/items/items_game.txt';
-const translationsLink =
-  'https://raw.githubusercontent.com/SteamDatabase/GameTracking-CSGO/master/csgo/resource/csgo_english.txt';
-=======
-const itemsLink = 'https://github.com/SteamDatabase/GameTracking-CS2/blob/master/game/csgo/pak01_dir/scripts/items/items_game.txt';
+const itemsLink = 'https://raw.githubusercontent.com/SteamDatabase/GameTracking-CS2/refs/heads/master/game/csgo/pak01_dir/scripts/items/items_game.txt';
 const translationsLink =
   'https://raw.githubusercontent.com/SteamDatabase/GameTracking-CS2/refs/heads/master/game/csgo/pak01_dir/resource/csgo_english.txt';
->>>>>>> fix(data): load images from different cdn and also items
+
 
 function fileCatcher(endNote) {
   return `${csgo_install_directory}${endNote}`;
@@ -80,6 +74,10 @@ async function updateItems(items) {
         jsonData,
         'music_definitions'
       );
+      dict_to_write['keychains'] = updateItemsLoop(
+        jsonData,
+        'keychain_definitions'
+      );
       dict_to_write['graffiti_tints'] = updateItemsLoop(
         jsonData,
         'graffiti_tints'
@@ -137,14 +135,14 @@ class items {
 
     for (const [key, value] of Object.entries(inventoryResult)) {
 
-      
+
       if (value['def_index'] == undefined) {
         continue;
       }
       const freeRewardStatusBytes = getAttributeValueBytes(value, 277);
       if (freeRewardStatusBytes && freeRewardStatusBytes.readUInt32LE(0) === 1) {
         continue;
-        
+
       }
       let musicIndexBytes = getAttributeValueBytes(value, 166);
       if (musicIndexBytes) {
