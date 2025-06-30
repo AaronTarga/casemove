@@ -243,9 +243,8 @@
     "update-electron-app": "^2.0.1",
     "xmldom": "^0.6.0"
   },
-  "devEngines": {
-    "node": ">=14.x",
-    "npm": ">=7.x"
+  "overrides": {
+    "inherits": "latest"
   },
   "collective": {
     "url": "https://opencollective.com/electron-react-boilerplate-594"
