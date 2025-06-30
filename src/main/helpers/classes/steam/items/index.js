@@ -2,10 +2,16 @@ const fs = require('fs');
 const VDF = require('@node-steam/vdf');
 const axios = require('axios');
 
+<<<<<<< HEAD
 const itemsLink =
   'https://raw.githubusercontent.com/SteamDatabase/GameTracking-CSGO/master/csgo/scripts/items/items_game.txt';
 const translationsLink =
   'https://raw.githubusercontent.com/SteamDatabase/GameTracking-CSGO/master/csgo/resource/csgo_english.txt';
+=======
+const itemsLink = 'https://github.com/SteamDatabase/GameTracking-CS2/blob/master/game/csgo/pak01_dir/scripts/items/items_game.txt';
+const translationsLink =
+  'https://raw.githubusercontent.com/SteamDatabase/GameTracking-CS2/refs/heads/master/game/csgo/pak01_dir/resource/csgo_english.txt';
+>>>>>>> fix(data): load images from different cdn and also items
 
 function fileCatcher(endNote) {
   return `${csgo_install_directory}${endNote}`;
@@ -465,7 +471,7 @@ class items {
     // Weapons and knifes
     if (storageRow['paint_index'] !== undefined) {
       var skinPatternName = this.getPaintDetails(storageRow['paint_index']);
-      var imageInventory = `econ/default_generated/${defIndexresult['name']}_${skinPatternName['name']}_light_large`;
+      var imageInventory = `econ/default_generated/${defIndexresult['name']}_${skinPatternName['name']}_light`;
     } else if (defIndexresult['baseitem'] == 1) {
       var imageInventory = `econ/weapons/base_weapons/${defIndexresult['name']}`;
     }

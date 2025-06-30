@@ -1,0 +1,361 @@
+From 8e7f9b243e8c34046759aa8df9bc836515aacaf1 Mon Sep 17 00:00:00 2001
+From: Aaron Targa <fanat.barca15@gmail.com>
+Date: Fri, 3 Jan 2025 17:33:21 +0100
+Subject: [PATCH 5/7] fix: revert feature removals
+
+---
+ parse_game_vpk.ipynb                          | 11 ++-
+ src/main/helpers/classes/steam/pricing.tsx    |  4 +-
+ .../content/Inventory/filterHeader.tsx        | 25 +++++-
+ .../content/storageUnits/from/fromFilters.tsx | 24 ++++-
+ src/renderer/views/overview/runOverview.tsx   | 88 ++++++++++---------
+ 5 files changed, 101 insertions(+), 51 deletions(-)
+
+diff --git a/parse_game_vpk.ipynb b/parse_game_vpk.ipynb
+index c60a4e6..dca08f5 100644
+--- a/parse_game_vpk.ipynb
++++ b/parse_game_vpk.ipynb
+@@ -52,7 +52,7 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 1,
++   "execution_count": 4,
+    "metadata": {},
+    "outputs": [],
+    "source": [
+@@ -69,14 +69,16 @@
+     "resource/csgo_english.txt\n",
+     "'''\n",
+     "\n",
+-    "pakfile = pak1.get_file(\"scripts/items/items_game.txt\")\n",
+-    "pakfile = pak1[\"scripts/items/items_game.txt\"]\n",
++    "pakfile = pak1.get_file(\"resource/csgo_english.txt\")\n",
++    "pakfile = pak1[\"resource/csgo_english.txt\"]\n",
+     "vpk_text = pakfile.read().decode('utf-8')\n",
+     "\n",
+     "d = vdf.loads(vpk_text)\n",
+     "\n",
+-    "d = d['items_game']\n",
+     "\n",
++    "\n",
++    "'''\n",
++    "d = d['items_game']\n",
+     "filtered_dict = { key: d[key]  for key in d.keys() if key in ['items','paint_kits','prefabs','sticker_kits','graffiti_tints']}\n",
+     "\n",
+     "music_kits_keys = list(filter(lambda item_key: 'image_inventory' in filtered_dict['items'][item_key] and  'econ/music_kits' in filtered_dict['items'][item_key]['image_inventory'] , filtered_dict['items'].keys()))\n",
+@@ -94,6 +96,7 @@
+     "('casket_icons', {}),\n",
+     "('music_kits',music_kits_dict)\n",
+     "])\n",
++    "'''\n",
+     "\n",
+     "json_text = json.dumps(final_dict,indent=2)\n",
+     "\n",
+diff --git a/src/main/helpers/classes/steam/pricing.tsx b/src/main/helpers/classes/steam/pricing.tsx
+index 8cc3bd9..220663a 100644
+--- a/src/main/helpers/classes/steam/pricing.tsx
++++ b/src/main/helpers/classes/steam/pricing.tsx
+@@ -124,7 +124,7 @@ class runItems {
+ 
+     if (this.prices[itemNamePricing] !== undefined) {
+       let pricingDict = {
+-        buff163: this.prices[itemNamePricing]?.buff163.starting_at?.price,
++        buff163: this.prices[itemNamePricing]?.buff163?.starting_at?.price,
+         steam_listing: this.prices[itemNamePricing]?.steam?.last_90d,
+         skinport: this.prices[itemNamePricing]?.skinport?.starting_at,
+         bitskins: 0,
+@@ -144,7 +144,7 @@ class runItems {
+       }
+       if (
+         this.prices[itemNamePricing]?.steam?.last_7d == 0 &&
+-        this.prices[itemNamePricing]?.buff163.starting_at?.price > 2000
++        this.prices[itemNamePricing]?.buff163?.starting_at?.price > 2000
+       ) {
+         pricingDict.steam_listing = this.prices[itemNamePricing]?.buff163.starting_at?.price * 0.8;
+       }
+diff --git a/src/renderer/components/content/Inventory/filterHeader.tsx b/src/renderer/components/content/Inventory/filterHeader.tsx
+index 2ed0eca..4fa2e8f 100644
+--- a/src/renderer/components/content/Inventory/filterHeader.tsx
++++ b/src/renderer/components/content/Inventory/filterHeader.tsx
+@@ -1,6 +1,7 @@
+-import { BrowserRouter as Router, Route } from 'react-router-dom';
++import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+ import { Disclosure } from '@headlessui/react';
+ import {
++  DocumentDownloadIcon,
+   FilterIcon,
+   SearchIcon,
+ } from '@heroicons/react/solid';
+@@ -9,12 +10,14 @@ import {
+   filterInventoryClearAll,
+   inventoryFilterSetSearch,
+ } from 'renderer/store/actions/filtersInventoryActions';
++import { classNames } from '../shared/filters/inventoryFunctions';
+ import PricingAmount from '../shared/filters/pricingAmount';
+ import MoveLeft from '../shared/filters/inventoryAmount';
+ import AccountAmount from '../shared/filters/accountAmount';
+ import { searchFilter } from 'renderer/functionsClasses/filters/search';
+ import { ConvertPrices } from 'renderer/functionsClasses/prices';
+ import { ReducerManager } from 'renderer/functionsClasses/reducerManager';
++import { downloadReport } from 'renderer/functionsClasses/downloadReport';
+ import InventoryFiltersDisclosure from './filtersDisclosure';
+ import { addMajorsFilters } from 'renderer/functionsClasses/filters/filters';
+ import { InventoryGetFilterManager } from './inventoryFilterSetup';
+@@ -127,7 +130,25 @@ function content() {
+           </div>
+           <div className="flex justify-end justify-items-end max-w-7xl px-4 sm:px-6 lg:px-8">
+             <div className="flex items-center divide-x divide-gray-200">
+-             
++              <div className="pr-3">
++                <Link
++                  to=""
++                  type="button"
++                  onClick={() => downloadReport(settingsData, pricesResult, inventoryToUse)}
++                  className={classNames(
++                    inventoryToUse.length == 0
++                      ? 'pointer-events-none border-gray-100'
++                      : 'hover:shadow-sm border-gray-200 ',
++                    'order-1 ml-3 inline-flex items-center px-4 py-2 border dark:bg-dark-level-three dark:border-none dark:border-opacity-0 dark:text-dark-white   text-sm font-medium rounded-md text-gray-500 bg-white hover:bg-gray-50 focus:outline-none focus:bg-gray-100 sm:order-0 sm:ml-0'
++                  )}
++                >
++                  <DocumentDownloadIcon
++                    className="mr-3 h-4 w-4 text-gray-500 dark:text-dark-white"
++                    aria-hidden="true"
++                  />
++                  Download
++                </Link>
++              </div>
+               <div className="pl-3">
+                 <PricingAmount totalAmount={new Intl.NumberFormat(settingsData.locale, { style: 'currency', currency: settingsData.currency }).format(totalAmount)} />
+               </div>
+diff --git a/src/renderer/components/content/storageUnits/from/fromFilters.tsx b/src/renderer/components/content/storageUnits/from/fromFilters.tsx
+index bc9a5d8..6a745dd 100644
+--- a/src/renderer/components/content/storageUnits/from/fromFilters.tsx
++++ b/src/renderer/components/content/storageUnits/from/fromFilters.tsx
+@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
+ import { Disclosure } from '@headlessui/react';
+ import {
+   ArchiveIcon,
++  DocumentDownloadIcon,
+   FilterIcon,
+   SaveAsIcon,
+   SearchIcon,
+@@ -15,6 +16,7 @@ import {
+ import MoveModal from '../../shared/modals & notifcations/modalMove';
+ import { moveModalQuerySet } from 'renderer/store/actions/modalMove actions';
+ import PricingAmount from '../../shared/filters/pricingAmount';
++import { downloadReport } from 'renderer/functionsClasses/downloadReport';
+ import { classNames } from '../../shared/filters/inventoryFunctions';
+ 
+ import StorageFilterDisclosure from './storageFilterDisclosure';
+@@ -166,7 +168,27 @@ function content() {
+           </div>
+           <div className="flex justify-end justify-items-end max-w-7xl px-4 sm:px-6 lg:px-8 ">
+             <div className="flex items-center divide-x divide-gray-200">
+-             
++              <div className="pr-3">
++                <Link
++                  to=""
++                  type="button"
++                  onClick={() =>
++                    downloadReport(settingsData, pricesResult, inventoryFilter)
++                  }
++                  className={classNames(
++                    inventory.storageInventory.length == 0
++                      ? 'pointer-events-none border-gray-100'
++                      : 'hover:shadow-sm border-gray-200 ',
++                    'order-1 ml-3 inline-flex items-center px-4 py-2 border dark:bg-dark-level-three dark:border-none dark:border-opacity-0 dark:text-dark-white   text-sm font-medium rounded-md text-gray-500 bg-white hover:bg-gray-50 focus:outline-none focus:bg-gray-100 sm:order-0 sm:ml-0'
++                  )}
++                >
++                  <DocumentDownloadIcon
++                    className="mr-3 h-4 dark:text-dark-white w-4 text-gray-500"
++                    aria-hidden="true"
++                  />
++                  Download
++                </Link>
++              </div>
+               <div className="pl-3">
+                 <PricingAmount
+                   totalAmount={new Intl.NumberFormat(settingsData.locale, {
+diff --git a/src/renderer/views/overview/runOverview.tsx b/src/renderer/views/overview/runOverview.tsx
+index 281dd4e..1ca0bb1 100644
+--- a/src/renderer/views/overview/runOverview.tsx
++++ b/src/renderer/views/overview/runOverview.tsx
+@@ -4,32 +4,35 @@ import {
+   ArchiveIcon,
+   CollectionIcon,
+   DatabaseIcon,
++  DownloadIcon,
+   PresentationChartBarIcon,
+   PresentationChartLineIcon,
+   TagIcon,
+ } from '@heroicons/react/solid';
+ import { useDispatch, useSelector } from 'react-redux';
+-import { HashRouter as Router, Route } from 'react-router-dom';
++import {
++  HashRouter as Router,
++  Route
++} from 'react-router-dom';
+ import { ReducerManager } from 'renderer/functionsClasses/reducerManager';
+ import { State } from 'renderer/interfaces/states';
+ import { ConvertPrices, RequestPrices } from 'renderer/functionsClasses/prices';
++import { downloadReport } from 'renderer/functionsClasses/downloadReport';
+ import { LoadButton } from 'renderer/components/content/loadStorageUnitsButton';
+ import ListBoxOptions from './overviewOptionsDropdown';
+-import {
+-  OverviewLeftCharts,
+-  OverviewRightCharts,
+-  OveviewBy,
+-} from 'renderer/variables/overviewOptions';
++import { OverviewLeftCharts, OverviewRightCharts, OveviewBy } from 'renderer/variables/overviewOptions';
+ import RightGraph from './rightGraph';
+ import LeftGraph from './leftGraph';
+ 
++
++
+ function Content() {
+   const [sidebarOpen, setSidebarOpen] = useState(false);
+   let ReducerClass = new ReducerManager(useSelector);
+   let currentState: State = ReducerClass.getStorage();
+-  const userDetails = currentState.authReducer;
+-  const settingsData = currentState.settingsReducer;
+-  const inventory = currentState.inventoryReducer;
++  const userDetails = currentState.authReducer
++  const settingsData = currentState.settingsReducer
++  const inventory = currentState.inventoryReducer
+   let hr = new Date().getHours();
+   let goodMessage: string = 'Good Evening';
+ 
+@@ -42,36 +45,33 @@ function Content() {
+   } else if (hr >= 0 && hr <= 3) {
+     goodMessage = 'Wassup';
+   }
+-  const dispatch = useDispatch();
++  const dispatch = useDispatch()
++
++
++  let PricingRequest = new RequestPrices(dispatch, settingsData, currentState.pricingReducer)
++  PricingRequest.handleRequestArray(currentState.inventoryReducer.inventory)
++
+ 
+-  let PricingRequest = new RequestPrices(
+-    dispatch,
+-    settingsData,
+-    currentState.pricingReducer
+-  );
+-  PricingRequest.handleRequestArray(currentState.inventoryReducer.inventory);
+ 
+   // Inventory prices
+-  const PricingClass = new ConvertPrices(
+-    settingsData,
+-    currentState.pricingReducer
+-  );
+-  let inventoryValue = 0;
+-  inventory.combinedInventory.forEach((element) => {
+-    const itemPrice = PricingClass.getPrice(element);
++  const PricingClass = new ConvertPrices(settingsData, currentState.pricingReducer)
++  let inventoryValue = 0
++  inventory.combinedInventory.forEach(element => {
++    const itemPrice = PricingClass.getPrice(element)
+     if (!isNaN(itemPrice)) {
+-      inventoryValue += itemPrice * element.combined_QTY;
++      inventoryValue += itemPrice * element.combined_QTY
+     }
+   });
+ 
+-  let storageUnitsValue = 0;
+-  inventory.storageInventory.forEach((element) => {
+-    const itemPrice = PricingClass.getPrice(element);
++  let storageUnitsValue = 0
++  inventory.storageInventory.forEach(element => {
++    const itemPrice = PricingClass.getPrice(element)
+     if (!isNaN(itemPrice)) {
+-      storageUnitsValue += itemPrice * element.combined_QTY;
++      storageUnitsValue += itemPrice * element.combined_QTY
+     }
+   });
+ 
++
+   return (
+     <>
+       <div className="h-screen bg-dark-level-one">
+@@ -137,35 +137,26 @@ function Content() {
+                         </div>
+                         <dl className="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">
+                           <dd className="mt-3 flex items-center mb-2 text-sm text-gray-500 font-medium sm:mr-6 sm:mt-0 capitalize text-dark-white">
+-                            <TagIcon
++                          <TagIcon
+                               className="flex-shrink-0 mr-1.5 h-5 w- text-gray-400"
+                               aria-hidden="true"
+                             />
+ 
+-                            <ListBoxOptions
+-                              optionsObject={OveviewBy}
+-                              keyToUse={'by'}
+-                            />
++                            <ListBoxOptions optionsObject={OveviewBy} keyToUse={'by'} />
+                           </dd>
+                           <dd className="flex mb-2 items-center text-sm text-gray-500 font-medium capitalize sm:mr-6 text-dark-white">
+                             <PresentationChartBarIcon
+                               className="flex-shrink-0 mr-1.5 h-5 w- text-gray-400"
+                               aria-hidden="true"
+                             />
+-                            <ListBoxOptions
+-                              optionsObject={OverviewLeftCharts}
+-                              keyToUse={'chartleft'}
+-                            />
++                            <ListBoxOptions optionsObject={OverviewLeftCharts} keyToUse={'chartleft'} />
+                           </dd>
+                           <dd className="flex mb-2 items-center text-sm text-gray-500 font-medium capitalize sm:mr-3 text-dark-white">
+                             <PresentationChartLineIcon
+                               className="flex-shrink-0 mr-1.5 h-5 w-5  text-gray-400"
+                               aria-hidden="true"
+                             />
+-                            <ListBoxOptions
+-                              optionsObject={OverviewRightCharts}
+-                              keyToUse={'chartRight'}
+-                            />
++                            <ListBoxOptions optionsObject={OverviewRightCharts} keyToUse={'chartRight'} />
+                           </dd>
+                           <dt className="sr-only">Account status</dt>
+                         </dl>
+@@ -173,6 +164,18 @@ function Content() {
+                     </div>
+                   </div>
+                   <div className="mt-6 flex space-x-3 md:mt-0 md:ml-4">
++                    <button
++                      onClick={() => downloadReport(settingsData, currentState.pricingReducer, [...inventory.combinedInventory, ...inventory.storageInventory])}
++                      className="inline-flex items-center px-4 py-2 shadow-sm text-sm font-medium rounded-md text-dark-white bg-dark-level-three hover:bg-dark-level-four"
++                    >
++                      {' '}
++                      <DownloadIcon
++                        className="flex-shrink-0 mr-1.5 h-5 w-5 text-dark-white"
++                        aria-hidden="true"
++                      />
++                      Download all
++                    </button>
++
+                     <LoadButton />
+                   </div>
+                 </div>
+@@ -250,7 +253,7 @@ function Content() {
+                                 /{' '}
+                                 {new Intl.NumberFormat('en-US').format(
+                                   inventory.totalAccountItems -
+-                                    inventory.inventory.length
++                                  inventory.inventory.length
+                                 )}{' '}
+                                 Items
+                               </div>
+@@ -301,6 +304,7 @@ function Content() {
+                 </div>
+               </div>
+ 
++
+               {/* Activity table (small breakpoint and up) */}
+               <div className="hidden sm:block">
+                 <div className="max-w-6xl mx-auto mt-8 px-4 sm:px-6 lg:px-8">
+-- 
+2.32.0.windows.2
+

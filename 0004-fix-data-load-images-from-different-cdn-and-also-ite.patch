@@ -1,0 +1,47 @@
+From ceb7b1002b4bead62242381f9a74282a7096fbe2 Mon Sep 17 00:00:00 2001
+From: Aaron Targa <fanat.barca15@gmail.com>
+Date: Fri, 3 Jan 2025 16:34:10 +0100
+Subject: [PATCH 4/7] fix(data): load images from different cdn and also items
+
+---
+ src/main/helpers/classes/steam/items/index.js     | 6 +++---
+ src/renderer/functionsClasses/createCSGOImage.tsx | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/main/helpers/classes/steam/items/index.js b/src/main/helpers/classes/steam/items/index.js
+index eb89c8d..45c471b 100644
+--- a/src/main/helpers/classes/steam/items/index.js
++++ b/src/main/helpers/classes/steam/items/index.js
+@@ -2,9 +2,9 @@ const fs = require('fs');
+ const VDF = require('@node-steam/vdf');
+ const axios = require('axios');
+ 
+-const itemsLink = 'files.skinledger.com/counterstrike/items_game.txt';
++const itemsLink = 'https://github.com/SteamDatabase/GameTracking-CS2/blob/master/game/csgo/pak01_dir/scripts/items/items_game.txt';
+ const translationsLink =
+-  'https://files.skinledger.com/counterstrike/csgo_english.txt';
++  'https://raw.githubusercontent.com/SteamDatabase/GameTracking-CS2/refs/heads/master/game/csgo/pak01_dir/resource/csgo_english.txt';
+ 
+ function fileCatcher(endNote) {
+   return `${csgo_install_directory}${endNote}`;
+@@ -463,7 +463,7 @@ class items {
+     // Weapons and knifes
+     if (storageRow['paint_index'] !== undefined) {
+       var skinPatternName = this.getPaintDetails(storageRow['paint_index']);
+-      var imageInventory = `econ/default_generated/${defIndexresult['name']}_${skinPatternName['name']}_light_large`;
++      var imageInventory = `econ/default_generated/${defIndexresult['name']}_${skinPatternName['name']}_light`;
+     } else if (defIndexresult['baseitem'] == 1) {
+       var imageInventory = `econ/weapons/base_weapons/${defIndexresult['name']}`;
+     }
+diff --git a/src/renderer/functionsClasses/createCSGOImage.tsx b/src/renderer/functionsClasses/createCSGOImage.tsx
+index c830a0b..41ffee6 100644
+--- a/src/renderer/functionsClasses/createCSGOImage.tsx
++++ b/src/renderer/functionsClasses/createCSGOImage.tsx
+@@ -1,3 +1,3 @@
+ export function createCSGOImage ( urlEndpath : string ) : string {
+-  return urlEndpath
++  return 'https://raw.githubusercontent.com/SkinDelta/go-cs2-cdn/refs/heads/main/static/panorama/images/' + urlEndpath + '.png'
+ }
+-- 
+2.32.0.windows.2
+

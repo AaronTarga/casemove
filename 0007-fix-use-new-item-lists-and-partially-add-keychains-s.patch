@@ -1,0 +1,140 @@
+From 4238dcca77da648282017cb40e64b1ad46b8e803 Mon Sep 17 00:00:00 2001
+From: Aaron Targa <fanat.barca15@gmail.com>
+Date: Mon, 24 Feb 2025 13:06:24 +0100
+Subject: [PATCH 7/7] fix: use new item lists and partially add keychains so
+ that existing stuff works
+
+---
+ .gitignore                                    |  5 +++-
+ package-lock.json                             | 15 +++++------
+ package.json                                  |  2 +-
+ src/main/helpers/classes/steam/items/index.js | 25 +++++++++++++++++++
+ 4 files changed, 38 insertions(+), 9 deletions(-)
+
+diff --git a/.gitignore b/.gitignore
+index d1b4226..20702e4 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -38,4 +38,7 @@ src/renderer/components/content/shared/modals & notifcations/modalPurchase.tsx
+ src/renderer/store/actions/modalPurchase Actions.tsx
+ src/renderer/store/actions/purchaseActions.tsx
+ *.pfx
+-*.cert
+\ No newline at end of file
++*.cert
++
++inventory.txt
++game.json
+diff --git a/package-lock.json b/package-lock.json
+index 59c6e92..2be6328 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -25,7 +25,7 @@
+         "electron-updater": "^4.3.9",
+         "fernet": "^0.4.0",
+         "find-process": "^1.4.7",
+-        "globaloffensive": "^3.1.0",
++        "globaloffensive": "^3.2.0",
+         "history": "4.x.x",
+         "inherits": "^2.0.4",
+         "lodash": "^4.17.21",
+@@ -9459,9 +9459,10 @@
+       }
+     },
+     "node_modules/globaloffensive": {
+-      "version": "3.1.0",
+-      "resolved": "https://registry.npmjs.org/globaloffensive/-/globaloffensive-3.1.0.tgz",
+-      "integrity": "sha512-8n18ammWEMY2CToXXBqDcv3A+4o4Rwa2ojm02sX3SpQXH2+oxteD5+oBtpYveIm6WL0NnffIRyNupj5ZTbQ4FQ==",
++      "version": "3.2.0",
++      "resolved": "https://registry.npmjs.org/globaloffensive/-/globaloffensive-3.2.0.tgz",
++      "integrity": "sha512-4k1pCfWK7UYM18f3sYULTtT37owEPtDIHHLd6uBl4yTtHK+Px31+eiZ6Syt5/J6+/SF9gpMp7cIRrKhsjQkUZg==",
++      "license": "MIT",
+       "dependencies": {
+         "bytebuffer": "^5.0.1",
+         "globaloffensive-sharecode": "^1.1.1",
+@@ -26006,9 +26007,9 @@
+       }
+     },
+     "globaloffensive": {
+-      "version": "3.1.0",
+-      "resolved": "https://registry.npmjs.org/globaloffensive/-/globaloffensive-3.1.0.tgz",
+-      "integrity": "sha512-8n18ammWEMY2CToXXBqDcv3A+4o4Rwa2ojm02sX3SpQXH2+oxteD5+oBtpYveIm6WL0NnffIRyNupj5ZTbQ4FQ==",
++      "version": "3.2.0",
++      "resolved": "https://registry.npmjs.org/globaloffensive/-/globaloffensive-3.2.0.tgz",
++      "integrity": "sha512-4k1pCfWK7UYM18f3sYULTtT37owEPtDIHHLd6uBl4yTtHK+Px31+eiZ6Syt5/J6+/SF9gpMp7cIRrKhsjQkUZg==",
+       "requires": {
+         "bytebuffer": "^5.0.1",
+         "globaloffensive-sharecode": "^1.1.1",
+diff --git a/package.json b/package.json
+index 3635312..4d11053 100644
+--- a/package.json
++++ b/package.json
+@@ -229,7 +229,7 @@
+     "electron-updater": "^4.3.9",
+     "fernet": "^0.4.0",
+     "find-process": "^1.4.7",
+-    "globaloffensive": "^3.1.0",
++    "globaloffensive": "^3.2.0",
+     "history": "4.x.x",
+     "inherits": "^2.0.4",
+     "lodash": "^4.17.21",
+diff --git a/src/main/helpers/classes/steam/items/index.js b/src/main/helpers/classes/steam/items/index.js
+index d1ddea8..7d187df 100644
+--- a/src/main/helpers/classes/steam/items/index.js
++++ b/src/main/helpers/classes/steam/items/index.js
+@@ -151,6 +151,10 @@ class items {
+       if (graffitiTint) {
+         value.graffiti_tint = graffitiTint.readUInt32LE(0);
+       }
++      let keychainIndexBytes = getAttributeValueBytes(value, 299)
++      if (keychainIndexBytes) {
++        value.keychain_index = keychainIndexBytes.readUInt32LE(0);
++      }
+       if (
+         (value['casket_id'] !== undefined && isCasket == false) ||
+         ['17293822569110896676', '17293822569102708641'].includes(value['id'])
+@@ -430,6 +434,17 @@ class items {
+       var finalName = finalName.replace('Swat', 'SWAT');
+     }
+ 
++    // Keychain check only if not main item TODO: for item_name add keychain like stickers info
++    if (!baseOne && storageRow['keychain_index'] !== undefined) {
++      const keychainIndex = storageRow['keychain_index'];
++      const keyChainResult = this.getKeyChains(keychainIndex);
++      let nameToUse =
++        'Charm | ' + this.getTranslation(keyChainResult['loc_name']);
++
++      return nameToUse;
++    }
++
++
+     return finalName;
+   }
+ 
+@@ -472,6 +487,12 @@ class items {
+       var imageInventory = `econ/weapons/base_weapons/${defIndexresult['name']}`;
+     }
+ 
++    if (!imageInventory && storageRow['keychain_index'] !== undefined) {
++      const keychainIndex = storageRow['keychain_index'];
++      const localKeychains = this.getKeyChains(keychainIndex);
++      return localKeychains['image_inventory'];
++    }
++
+     return imageInventory;
+   }
+   itemProcessorCanBeMoved(returnDict, storageRow) {
+@@ -562,6 +583,10 @@ class items {
+     return this.csgoItems['music_kits'][musicIndex];
+   }
+ 
++  getKeyChains(keychainIndex) {
++    return this.csgoItems['keychains'][keychainIndex];
++  }
++
+   getGraffitiKitName(graffitiID) {
+     for (const [key, value] of Object.entries(
+       this.csgoItems['graffiti_tints']
+-- 
+2.32.0.windows.2
+

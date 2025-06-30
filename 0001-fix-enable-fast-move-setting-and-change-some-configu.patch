@@ -1,0 +1,307 @@
+From f11b49517249fe79f817897f4197a05729a974e6 Mon Sep 17 00:00:00 2001
+From: Aaron Targa <fanat.barca15@gmail.com>
+Date: Sat, 28 Dec 2024 16:57:37 +0100
+Subject: [PATCH 1/7] fix: enable fast move setting and change some
+ configurations
+
+---
+ .gitignore                                    |  2 ++
+ README.md                                     | 22 +++++++++++++++++
+ package-lock.json                             |  4 ++++
+ package.json                                  |  9 +++++--
+ release/app/package.json                      |  6 +++++
+ src/main/main.ts                              |  7 +++++-
+ src/main/scripts/versionHelper.tsx            |  2 +-
+ .../modals & notifcations/modalMove.tsx       | 22 +++--------------
+ src/renderer/store/actions/settings.tsx       |  6 +++++
+ src/renderer/views/settings/settings.tsx      | 24 ++++++++++++-------
+ 10 files changed, 72 insertions(+), 32 deletions(-)
+
+diff --git a/.gitignore b/.gitignore
+index 1c56bd5..d1b4226 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -37,3 +37,5 @@ src/renderer/store/reducer/purchase.tsx
+ src/renderer/components/content/shared/modals & notifcations/modalPurchase.tsx
+ src/renderer/store/actions/modalPurchase Actions.tsx
+ src/renderer/store/actions/purchaseActions.tsx
++*.pfx
++*.cert
+\ No newline at end of file
+diff --git a/README.md b/README.md
+index 0e582bb..e712c04 100644
+--- a/README.md
++++ b/README.md
+@@ -4,6 +4,28 @@
+ 
+ ----
+ 
++## dev comments
++
++create .env file with 
++```
++SIGNING_TIMESTAMP=http://timestamp.acs.microsoft.com
++SIGNING_PATH=path\to\casemove\
++```
++and then create self signed cert and move it to casemove path
++```
++$cert = New-SelfSignedCertificate -DNSName "www.domain.com" -CertStoreLocation Cert:\CurrentUser\My -Type CodeSigningCert -Subject “Example Code Signing Certificate”
++
++$CertPassword = ConvertTo-SecureString -String "my_password" -Force -AsPlainText
++
++$certfile = Get-ChildItem -Path Cert:\CurrentUser\My\$($cert.Thumbprint)
++
++Export-PfxCertificate -Cert $certfile -FilePath "C:\Cert$certificate.pfx" -Password $CertPassword
++
++#or 
++
++Export-Certificate -Cert $certfile -FilePath "C:\Cert$certificate.cert" -Type CERT
++```
++
+ ## Download Latest Version (Casemove 2.3.6)
+ 
+ This is the latest stable version and can be downloaded from the [releases](https://github.com/nombersDev/casemove/releases) page, or directly from:
+diff --git a/package-lock.json b/package-lock.json
+index 767f28a..b23ccc8 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -120,6 +120,10 @@
+         "webpack-cli": "^4.9.1",
+         "webpack-dev-server": "^4.7.3",
+         "webpack-merge": "^5.8.0"
++      },
++      "engines": {
++        "node": ">=14.x",
++        "npm": ">=7.x"
+       }
+     },
+     "node_modules/@adobe/css-tools": {
+diff --git a/package.json b/package.json
+index 3a0aecb..5b9d4a6 100644
+--- a/package.json
++++ b/package.json
+@@ -93,13 +93,18 @@
+     ],
+     "publish": {
+       "provider": "github",
+-      "owner": "nombersDev",
++      "owner": "AaronTarga",
+       "repo": "casemove"
+     }
+   },
+   "author": {
+     "name": "Nombers"
+   },
++  "contributors" : [
++  {
++    "name" : "AaronTarga"
++  }
++  ],
+   "jest": {
+     "testURL": "http://localhost/",
+     "testEnvironment": "jsdom",
+@@ -243,7 +248,7 @@
+     "update-electron-app": "^2.0.1",
+     "xmldom": "^0.6.0"
+   },
+-  "devEngines": {
++  "engines": {
+     "node": ">=14.x",
+     "npm": ">=7.x"
+   },
+diff --git a/release/app/package.json b/release/app/package.json
+index 27b916a..9547730 100644
+--- a/release/app/package.json
++++ b/release/app/package.json
+@@ -9,6 +9,12 @@
+     "email": "casemovenombers@gmail.com",
+     "url": "https://github.com/nombersDev/casemove"
+   },
++  "contributors" : [
++    {
++      "name" : "AaronTarga",
++      "url": "https://github.com/AaronTarga/casemove"
++    }
++    ],
+   "scripts": {
+     "electron-rebuild": "node -r ts-node/register ../../.erb/scripts/electron-rebuild.js",
+     "link-modules": "node -r ts-node/register ../../.erb/scripts/link-modules.js",
+diff --git a/src/main/main.ts b/src/main/main.ts
+index 473c5ff..e7c953f 100644
+--- a/src/main/main.ts
++++ b/src/main/main.ts
+@@ -995,7 +995,12 @@ async function settingsSetup() {
+       setValue('devmode', false);
+     }
+   });
+-  setValue('fastmove', false);
++  getValue('fastmove').then((returnValue) => {
++    if (returnValue == undefined) {
++      console.log('fastmove', returnValue);
++      setValue('fastmove', false);
++    }
++  });
+ }
+ settingsSetup();
+ 
+diff --git a/src/main/scripts/versionHelper.tsx b/src/main/scripts/versionHelper.tsx
+index 96a9f33..f5425d0 100644
+--- a/src/main/scripts/versionHelper.tsx
++++ b/src/main/scripts/versionHelper.tsx
+@@ -5,7 +5,7 @@ import { GithubResponse } from 'main/interfaces/mainInterfaces';
+ async function getGithubVersion(platform: string): Promise<GithubResponse> {
+   return new Promise((resolve) => {
+     axios
+-      .get('https://api.github.com/repos/nombersDev/casemove/releases')
++      .get('https://api.github.com/repos/AaronTaga/casemove/releases')
+       .then((response) => {
+         const responseData: JSON = response.data;
+ 
+diff --git a/src/renderer/components/content/shared/modals & notifcations/modalMove.tsx b/src/renderer/components/content/shared/modals & notifcations/modalMove.tsx
+index e0e2fea..c2e8f9f 100644
+--- a/src/renderer/components/content/shared/modals & notifcations/modalMove.tsx	
++++ b/src/renderer/components/content/shared/modals & notifcations/modalMove.tsx	
+@@ -15,7 +15,6 @@ import {
+   moveFromClearAll,
+   moveFromReset,
+ } from 'renderer/store/actions/moveFromActions';
+-import { Link } from 'react-router-dom';
+ 
+ export default function MoveModal() {
+   const waitTime = 100;
+@@ -24,6 +23,7 @@ export default function MoveModal() {
+   const [seenStorage, setStorage] = useState('');
+   const dispatch = useDispatch();
+   const modalData = useSelector((state: any) => state.modalMoveReducer);
++  const settingsData = useSelector((state: any) => state.settingsReducer);
+   async function cancelMe() {
+     window.electron.ipcRenderer.refreshInventory();
+     dispatch(closeMoveModal());
+@@ -40,7 +40,7 @@ export default function MoveModal() {
+     dispatch(moveModalResetPayload());
+   }
+ 
+-  const fastMode = false;
++  const fastMode = settingsData.fastMove;
+ 
+   async function runModal() {
+     if (modalData.moveOpen) {
+@@ -175,23 +175,7 @@ export default function MoveModal() {
+                   <div className="mt-2">
+                     <p className="text-sm text-gray-500">
+                       Please wait while the app moves your items.
+-                      {fastMode == false ? (
+-                        <p>
+-                          Want to speed up the process? Use fastmove in{' '}
+-                          <Link
+-                            to={{
+-                              pathname: "https://skinledger.com",
+-                            }}
+-                            target="_blank"
+-                          >
+-                            {' '}
+-                            Skinledger
+-                          </Link>{' '}
+-                          for faster moving.
+-                        </p>
+-                      ) : (
+-                        ''
+-                      )}
++                      {fastMode == false ? ' \nWant to speed this up? Enable fastmove in the settings.': ''}
+                     </p>
+ 
+                     {modalData.totalFailed == 0 ? (
+diff --git a/src/renderer/store/actions/settings.tsx b/src/renderer/store/actions/settings.tsx
+index 0a55c38..4218815 100644
+--- a/src/renderer/store/actions/settings.tsx
++++ b/src/renderer/store/actions/settings.tsx
+@@ -1,6 +1,12 @@
+ import { Overview } from "renderer/interfaces/states"
+ import { CurrencyReturnValue } from "shared/Interfaces.tsx/IPCReturn"
+ 
++export const setFastMove = (valueToSet) => {
++  return {
++      type: 'SETTINGS_SET_FASTMOVE',
++      payload: valueToSet
++  }
++}
+ export const setColumns = (valueToSet) => {
+   return {
+       type: 'SETTINGS_SET_COLUMNS',
+diff --git a/src/renderer/views/settings/settings.tsx b/src/renderer/views/settings/settings.tsx
+index eabf6cc..5894473 100644
+--- a/src/renderer/views/settings/settings.tsx
++++ b/src/renderer/views/settings/settings.tsx
+@@ -10,6 +10,7 @@ import {
+   setCurrencyValue,
+   setDevmode,
+   setSteamLoginShow,
++  setFastMove,
+ } from 'renderer/store/actions/settings';
+ 
+ const sources = [
+@@ -196,6 +197,14 @@ export default function settingsPage() {
+   );
+ 
+   // Fastmove
++  // Fastmove
++  async function updateFastMove() {
++    const correctValue = !(await window.electron.store.get('fastmove'));
++    setFastMoveStatus(correctValue);
++    await window.electron.store.set('fastmove', correctValue);
++    dispatch(setFastMove(correctValue));
++  }
++  const [fastMoveStatus, setFastMoveStatus] = useState(settingsData.fastMove);
+ 
+   // Dark mode
+   async function updateDevMode() {
+@@ -341,24 +350,21 @@ export default function settingsPage() {
+                               <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                 <span className="flex-grow"></span>
+                                 <span className="flex items-center ml-4 flex-shrink-0">
+-                                  <p className="text-dark-white">
+-                                    Skinledger only
+-                                  </p>
+-                                  <LockClosedIcon className="h-5 w-5 text-dark-white" />
+                                   <Switch
+                                     checked={window.electron.store.get(
+                                       'fastmove'
+                                     )}
++                                    onChange={() => updateFastMove()}
+                                     className={classNames(
+-                                      false
++                                      fastMoveStatus
+                                         ? 'bg-indigo-600 dark:bg-indigo-700'
+                                         : 'bg-gray-200',
+-                                      'relative inline-flex mr-3 opacity-50 flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none'
++                                      'relative inline-flex mr-3 flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none'
+                                     )}
+                                   >
+                                     <span
+                                       className={classNames(
+-                                        false
++                                        fastMoveStatus
+                                           ? 'translate-x-5'
+                                           : 'translate-x-0',
+                                         'pointer-events-none relative inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200'
+@@ -366,7 +372,7 @@ export default function settingsPage() {
+                                     >
+                                       <span
+                                         className={classNames(
+-                                          false
++                                          fastMoveStatus
+                                             ? 'opacity-0 ease-out duration-100'
+                                             : 'opacity-100 ease-in duration-200',
+                                           'absolute inset-0 h-full w-full flex items-center justify-center transition-opacity'
+@@ -389,7 +395,7 @@ export default function settingsPage() {
+                                       </span>
+                                       <span
+                                         className={classNames(
+-                                          false
++                                          fastMoveStatus
+                                             ? 'opacity-100 ease-in duration-200'
+                                             : 'opacity-0 ease-out duration-100',
+                                           'absolute inset-0 h-full w-full flex items-center justify-center transition-opacity'
+-- 
+2.32.0.windows.2
+
