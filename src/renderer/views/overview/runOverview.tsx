@@ -47,7 +47,7 @@ function Content() {
   }
   const dispatch = useDispatch()
 
-  
+
   let PricingRequest = new RequestPrices(dispatch, settingsData, currentState.pricingReducer)
   PricingRequest.handleRequestArray(currentState.inventoryReducer.inventory)
 
@@ -141,7 +141,7 @@ function Content() {
                               className="flex-shrink-0 mr-1.5 h-5 w- text-gray-400"
                               aria-hidden="true"
                             />
-                            
+
                             <ListBoxOptions optionsObject={OveviewBy} keyToUse={'by'} />
                           </dd>
                           <dd className="flex mb-2 items-center text-sm text-gray-500 font-medium capitalize sm:mr-6 text-dark-white">
