@@ -9,6 +9,12 @@
     "email": "casemovenombers@gmail.com",
     "url": "https://github.com/nombersDev/casemove"
   },
+  "contributors" : [
+    {
+      "name" : "AaronTarga",
+      "url": "https://github.com/AaronTarga/casemove"
+    }
+    ],
   "scripts": {
     "electron-rebuild": "node -r ts-node/register ../../.erb/scripts/electron-rebuild.js",
     "link-modules": "node -r ts-node/register ../../.erb/scripts/link-modules.js",

@@ -93,13 +93,18 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "nombersDev",
+      "owner": "AaronTarga",
       "repo": "casemove"
     }
   },
   "author": {
     "name": "Nombers"
   },
+  "contributors" : [
+  {
+    "name" : "AaronTarga"
+  }
+  ],
   "jest": {
     "testURL": "http://localhost/",
     "testEnvironment": "jsdom",

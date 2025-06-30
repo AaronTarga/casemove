@@ -4,6 +4,29 @@
 
 ----
 
+
+## dev comments
+
+create .env file with 
+```
+SIGNING_TIMESTAMP=http://timestamp.acs.microsoft.com
+SIGNING_PATH=path\to\casemove\
+```
+and then create self signed cert and move it to casemove path
+```
+$cert = New-SelfSignedCertificate -DNSName "www.domain.com" -CertStoreLocation Cert:\CurrentUser\My -Type CodeSigningCert -Subject “Example Code Signing Certificate”
+
+$CertPassword = ConvertTo-SecureString -String "my_password" -Force -AsPlainText
+
+$certfile = Get-ChildItem -Path Cert:\CurrentUser\My\$($cert.Thumbprint)
+
+Export-PfxCertificate -Cert $certfile -FilePath "C:\Cert$certificate.pfx" -Password $CertPassword
+
+#or 
+
+Export-Certificate -Cert $certfile -FilePath "C:\Cert$certificate.cert" -Type CERT
+```
+
 ## Download Latest Version (Casemove 2.3.3)
 
 This is the latest stable version and can be downloaded from the [releases](https://github.com/nombersDev/casemove/releases) page, or directly from:

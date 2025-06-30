@@ -2,10 +2,10 @@ import { Overview } from "renderer/interfaces/states"
 import { CurrencyReturnValue } from "shared/Interfaces.tsx/IPCReturn"
 
 export const setFastMove = (valueToSet) => {
-    return {
-        type: 'SETTINGS_SET_FASTMOVE',
-        payload: valueToSet
-    }
+  return {
+      type: 'SETTINGS_SET_FASTMOVE',
+      payload: valueToSet
+  }
 }
 export const setColumns = (valueToSet) => {
   return {

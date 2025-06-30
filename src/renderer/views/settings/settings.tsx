@@ -7,6 +7,7 @@ import {
   setFastMove,
   setSourceValue,
   setSteamLoginShow,
+  setFastMove,
 } from 'renderer/store/actions/settings';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import { classNames } from 'renderer/components/content/shared/filters/inventoryFunctions';
@@ -182,7 +183,7 @@ export default function settingsPage() {
   const dispatch = useDispatch();
   const settingsData = useSelector((state: any) => state.settingsReducer);
 
-  
+
   // Fastmove
   async function updateShowSteamLogin() {
     const correctValue = !(await window.electron.store.get('steamLogin'));
@@ -269,7 +270,7 @@ export default function settingsPage() {
                               </p>
                           <dl className="divide-y divide-gray-200 dark:divide-opacity-50">
 
-                            
+
                           <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
                             <dt className="text-sm font-medium text-gray-900 dark:text-dark-white">
                                 Show close popup <br />
@@ -278,7 +279,7 @@ export default function settingsPage() {
                                   Shows a popup when you login and steam is open to close it.
                                 </span>
                               </dt>
-                             
+
                               <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                 <span className="flex-grow"></span>
                                 <span className="flex items-center ml-4 flex-shrink-0">
@@ -346,7 +347,7 @@ export default function settingsPage() {
                               </dd>
                             </div>
                             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
-                            
+
                               <dt className="text-sm font-medium text-gray-900 dark:text-dark-white">
                                 Fastmove <br />
                                 <span className="text-gray-400">
