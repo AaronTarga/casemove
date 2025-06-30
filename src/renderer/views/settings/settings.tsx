@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   setCurrencyValue,
   setDevmode,
-  setFastMove,
   setSourceValue,
   setSteamLoginShow,
   setFastMove,

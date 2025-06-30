@@ -116,7 +116,7 @@ contextBridge.exposeInMainWorld('electron', {
     startQRLogin(shouldRemember) {
       return new Promise((resolve) => {
         ipcRenderer.removeAllListeners('login-reply');
-        
+
         ipcRenderer.send('startQRLogin', shouldRemember);
         ipcRenderer.once('login-reply', (event, arg) => {
           resolve(arg);
