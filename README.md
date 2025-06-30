@@ -7,6 +7,11 @@
 
 ## dev comments
 
+installation is a bit buggy for me but npm install fails but somehov npm run start and npm run prepare work
+
+install signtool
+https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/
+
 create .env file with 
 ```
 SIGNING_TIMESTAMP=http://timestamp.acs.microsoft.com
