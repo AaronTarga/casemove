@@ -33,11 +33,6 @@ import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
 import { emitterAccount } from '../emitters';
 import { flowLoginRegularQR } from './helpers/login/flowLoginRegularQR';
-import { ReadableStream } from "web-streams-polyfill";
-
-if (typeof global.ReadableStream === "undefined") {
-      global.ReadableStream =  ReadableStream as unknown as typeof global.ReadableStream;;
-}
 
 
 autoUpdater.logger = log;

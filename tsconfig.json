@@ -1,28 +1,25 @@
+// tsconfig.json
 {
   "compilerOptions": {
-    "target": "es2021",
-    "module": "commonjs",
-    "lib": ["dom", "esnext"],
-    "declaration": true,
-    "declarationMap": true,
-    "jsx": "react-jsx",
-    "strict": true,
-    "pretty": true,
-    "sourceMap": true,
-    "baseUrl": "./src",
-    /* Additional Checks */
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    /* Module Resolution Options */
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "allowJs": true,
-    "outDir": "release/app/dist",
-    "noImplicitAny": false
+    "target": "es2019", // Or a specific ECMAScript version compatible with your target environments (e.g., "es2019")
+    "module": "commonjs", // Or "esnext" if you're using ES modules throughout and Babel handles it
+    "lib": ["esnext", "dom"], // Include necessary libraries, "dom" for browser environments
+    "allowJs": true, // Allow JavaScript files to be part of the project
+    "jsx": "react-jsx", // Or "preserve" if Babel handles JSX entirely
+    "strict": false, // Enable all strict type-checking options
+    "esModuleInterop": true, // Enables better interoperability with CommonJS modules
+    "skipLibCheck": true, // Skip type checking of all declaration files (*.d.ts)
+    "forceConsistentCasingInFileNames": true, // Disallow inconsistently-cased references to the same file
+    "resolveJsonModule": true, // Allow importing .json files
+
+    // --- Absolute Paths Configuration ---
+    "baseUrl": "./src", // Base URL for non-relative module imports. This is the root where 'paths' are resolved from.
+                   // Since your `webpack.renderer.config.js` is in the project root, '.' works.
+
+    // Crucial for Babel integration:
+    "noEmit": true, // <--- VERY IMPORTANT: Tell TypeScript to NOT emit JavaScript files. Babel will do this.
+    "isolatedModules": true // <--- HIGHLY RECOMMENDED: Warns about code that might not work correctly when transpiled in isolation (as Babel does).
   },
-  "exclude": ["test", "release/build", "release/app/dist", ".erb/dll"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.js", "src/**/*.jsx", ], // Include your source files and Webpack configs
+  "exclude": ["test","node_modules", "dist"]
 }

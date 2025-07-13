@@ -15,14 +15,14 @@ import {
   SelectorIcon,
   UploadIcon,
 } from '@heroicons/react/solid';
-import { Fragment, useMemo, useState } from 'react';
+import { Fragment, SetStateAction, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Link,
-  Redirect,
+  Navigate,
   Route,
-  HashRouter as Router,
-  Switch,
+  BrowserRouter as Router,
+  Routes,
   useLocation,
 } from 'react-router-dom';
 import 'tailwindcss/tailwind.css';
@@ -45,7 +45,7 @@ import {
   DispatchIPC,
   DispatchStore,
 } from './functionsClasses/rendererCommands/admin';
-import { State } from './interfaces/states';
+import { Settings, State } from './interfaces/states';
 import {
   inventoryAddCategoryFilter,
   inventoryAddRarityFilter,
@@ -109,7 +109,7 @@ function AppContent() {
   const filterDetails = currentState.inventoryFiltersReducer;
 
   document.documentElement.classList.add('dark');
-  function updateAutomation(itemHref) {
+  function updateAutomation(itemHref: SetStateAction<string>) {
     setSideMenuOption(itemHref);
     setSidebarOpen(false);
   }
@@ -123,7 +123,7 @@ function AppContent() {
   const StoreClass = new DispatchStore(dispatch);
   const IPCClass = new DispatchIPC(dispatch);
 
-  async function handleFilterData(combinedInventory) {
+  async function handleFilterData(combinedInventory: itemRow[]) {
     if (
       filterDetails.inventoryFilter.length > 0 ||
       filterDetails.sortValue != 'Default'
@@ -225,12 +225,12 @@ function AppContent() {
 
   if (firstRun == false) {
     setFirstRun(true);
-    window.electron.ipcRenderer.on('pricing', (message) => {
+    window.electron.ipcRenderer.on('pricing', (message: any[]) => {
       console.log(message);
       dispatch(pricing_addPrice(message[0]));
     });
 
-    window.electron.ipcRenderer.on('updater', (message) => {
+    window.electron.ipcRenderer.on('updater', (message: any) => {
       console.log(message);
     });
   }
@@ -881,32 +881,32 @@ function AppContent() {
             </div>
           </div>
           <main className="flex-1 dark:bg-dark-level-one">
+          <toMoveContext.Provider value={toMoveValue}>
             <Router>
-              <Switch>
-                <toMoveContext.Provider value={toMoveValue}>
+              <Routes>
                   {userDetails.isLoggedIn ? (
-                    <Redirect exact from="/" to="/stats" />
+                    <Route path="/"  element={<Navigate to="/stats" replace />} />
                   ) : (
-                    <Redirect from="*" to="/signin" />
+                    <Route path="*" element={<Navigate to="/signin" replace />} />
                   )}
                   {userDetails.isLoggedIn ? (
-                    <Redirect exact from="/signin" to="/stats" />
+                    <Route path="/signin" element={<Navigate to="/stats" replace />} />
                   ) : (
                     ''
                   )}
                   <Route
                     path="/transferfrom"
-                    component={StorageUnitsComponent}
+                    Component={StorageUnitsComponent}
                   />
-                  <Route exact path="/transferto" component={ToContent} />
-                  <Route path="/signin" component={LoginPage} />
-                  <Route exact path="/inventory" component={inventoryContent} />
-                  <Route exact path="/tradeup" component={TradeupPage} />
-                  <Route exact path="/settings" component={settingsPage} />
-                  <Route exact path="/stats" component={OverviewPage} />
-                </toMoveContext.Provider>
-              </Switch>
+                  <Route path="/transferto" Component={ToContent} />
+                  <Route path="/signin" Component={LoginPage} />
+                  <Route path="/inventory" Component={inventoryContent} />
+                  <Route path="/tradeup" Component={TradeupPage} />
+                  <Route path="/settings" Component={settingsPage} />
+                  <Route path="/stats" Component={OverviewPage} />
+              </Routes>
             </Router>
+            </toMoveContext.Provider>
           </main>
         </div>
       </div>
@@ -915,9 +915,12 @@ function AppContent() {
 }
 
 export default function App() {
+
   return (
     <Router>
-      <Route path="/" component={AppContent} />
+      <Routes>
+      <Route path="*" Component={AppContent} />
+      </Routes>
     </Router>
   );
 }
