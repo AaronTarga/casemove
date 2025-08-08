@@ -5,8 +5,8 @@ import GlobalOffensive from 'globaloffensive';
 import os from 'os';
 import path from 'path';
 import 'regenerator-runtime/runtime';
-import { CurrencyReturnValue } from 'shared/Interfaces.tsx/IPCReturn';
-import { LoginCommandReturnPackage } from 'shared/Interfaces.tsx/store';
+import { CurrencyReturnValue } from '../shared/Interfaces.tsx/IPCReturn';
+import { LoginCommandReturnPackage } from '../shared/Interfaces.tsx/store';
 import SteamUser from 'steam-user';
 import { LoginGenerator } from './helpers/classes/IPCGenerators/loginGenerator';
 import { currency } from './helpers/classes/steam/currency';
@@ -34,6 +34,7 @@ import { autoUpdater } from 'electron-updater';
 import { emitterAccount } from '../emitters';
 import { flowLoginRegularQR } from './helpers/login/flowLoginRegularQR';
 
+if(require('electron-squirrel-startup')) app.quit();
 
 autoUpdater.logger = log;
 // @ts-ignore
@@ -178,6 +179,7 @@ const createWindow = async () => {
     frame: frameValue,
     icon: getAssetPath('icon.png'),
     webPreferences: {
+      nodeIntegration: true, // is default value after Electron v5
       preload: path.join(__dirname, 'preload.js'),
       webSecurity: false,
       sandbox: false,
@@ -215,10 +217,10 @@ const createWindow = async () => {
   menuBuilder.buildMenu();
 
   // Open urls in the user's browser
-  mainWindow.webContents.on('new-window', (event, url) => {
-    event.preventDefault();
-    shell.openExternal(url);
-  });
+  mainWindow.webContents.setWindowOpenHandler((details) => {
+    shell.openExternal(details.url);
+    return { action: 'deny' };
+  })
 
   if (process.platform == 'linux') {
     mainWindow.removeMenu();
@@ -978,7 +980,7 @@ async function startEvents(csgo, user) {
 
 // Get currency
 ipcMain.on('getCurrency', async (event) => {
-  getValue('pricing.currency').then((returnValue) => {
+  getValue('pricing.currency').then((returnValue: string) => {
     currencyClass.getRate(returnValue).then((response) => {
       let returnObject: CurrencyReturnValue = {
         currency: returnValue,

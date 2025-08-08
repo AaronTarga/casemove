@@ -2,8 +2,8 @@ import { CashIcon } from '@heroicons/react/solid';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { classNames } from 'renderer/components/content/shared/filters/inventoryFunctions';
-import { tradeUpSetPossible } from 'renderer/store/actions/tradeUpActions';
+import { classNames } from '../../../../renderer/components/content/shared/filters/inventoryFunctions';
+import { tradeUpSetPossible } from '../../../../renderer/store/actions/tradeUpActions';
 
 const rarityShort = {
   'Factory New': 'FN',

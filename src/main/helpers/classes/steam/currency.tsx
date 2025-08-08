@@ -1,4 +1,4 @@
-const CC = require('currency-converter-lt');
+import CC from 'currency-converter-lt'
 
 async function setBackUp(currencyClass) {
   let rates = require('./backup/currency.json')
@@ -25,7 +25,7 @@ async function getLiveRates(currencyClass) {
     console.log('here 2')
 }
 
-class currency {
+export class currency {
   rates = {};
   currencyConverter
   seenRates = {}
@@ -84,9 +84,4 @@ class currency {
 //    })
 //});
 
-
-module.exports = {
-  currency
-};
-export { currency };
 

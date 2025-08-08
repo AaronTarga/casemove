@@ -1,10 +1,10 @@
 import { Fragment } from 'react'
 import {  Popover, Transition } from '@headlessui/react'
 import { useDispatch, useSelector } from 'react-redux';
-import { tradeUpCollectionsAddRemove } from 'renderer/store/actions/tradeUpActions';
-import { classNames } from 'renderer/components/content/shared/filters/inventoryFunctions';
-import { ReducerManager } from 'renderer/functionsClasses/reducerManager';
-import { State } from 'renderer/interfaces/states';
+import { tradeUpCollectionsAddRemove } from '../../../../renderer/store/actions/tradeUpActions';
+import { classNames } from '../../../../renderer/components/content/shared/filters/inventoryFunctions';
+import { ReducerManager } from '../../../../renderer/functionsClasses/reducerManager';
+import { State } from '../../../../renderer/interfaces/states';
 
 export default function CollectionsDropDown() {
   const currentState: State = new ReducerManager(useSelector).getStorage()

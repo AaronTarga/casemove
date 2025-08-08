@@ -1,6 +1,6 @@
 
-import { ItemRow, ItemRowStorage } from "renderer/interfaces/items";
-import { State } from "renderer/interfaces/states";
+import { ItemRow, ItemRowStorage } from "../../../renderer/interfaces/items";
+import { State } from "../../../renderer/interfaces/states";
 import { HandleStorageData } from "./storageUnitsClass";
 
 function sorting(valueOne, valueTwo) {

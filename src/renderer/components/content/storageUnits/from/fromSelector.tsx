@@ -9,19 +9,19 @@ import {
 import { Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { ReducerManager } from 'renderer/functionsClasses/reducerManager';
-import { HandleStorageData } from 'renderer/functionsClasses/storageUnits/storageUnitsClass';
-import { getAllStorages } from 'renderer/functionsClasses/storageUnits/storageUnitsFunctions';
-import { ItemRowStorage } from 'renderer/interfaces/items';
-import { clearStorageIDData } from 'renderer/store/inventory/inventoryActions';
-import { setRenameModal } from 'renderer/store/actions/modalMove actions';
+import { ReducerManager } from '../../../../../renderer/functionsClasses/reducerManager';
+import { HandleStorageData } from '../../../../../renderer/functionsClasses/storageUnits/storageUnitsClass';
+import { getAllStorages } from '../../../../../renderer/functionsClasses/storageUnits/storageUnitsFunctions';
+import { ItemRowStorage } from '../../../../../renderer/interfaces/items';
+import { clearStorageIDData } from '../../../../../renderer/store/inventory/inventoryActions';
+import { setRenameModal } from '../../../../../renderer/store/actions/modalMove actions';
 import {
   moveFromAddCasketToStorages,
   moveFromRemoveCasket,
   moveFromReset,
   moveFromSetFull,
   moveFromsetSearchFieldStorage,
-} from 'renderer/store/actions/moveFromActions';
+} from '../../../../../renderer/store/actions/moveFromActions';
 import { LoadingButton } from '../../shared/animations';
 import EmptyComponent from '../../shared/emptyState';
 import { classNames } from '../../shared/filters/inventoryFunctions';

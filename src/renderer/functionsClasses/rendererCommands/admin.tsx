@@ -8,13 +8,13 @@ import {
   setOS,
   setSourceValue,
   setSteamLoginShow,
-} from 'renderer/store/actions/settings';
+} from '../../../renderer/store/actions/settings';
 import {
   DispatchIPCBuildingObject,
   DispatchIPCHandleBuildingOptionsClass,
   DispatchStoreBuildingObject,
   DispatchStoreHandleBuildingOptionsClass,
-} from 'shared/Interfaces.tsx/login';
+} from '../../../shared/Interfaces.tsx/login';
 
 export class IPCCommunication {
   ipc = window.electron.ipcRenderer;

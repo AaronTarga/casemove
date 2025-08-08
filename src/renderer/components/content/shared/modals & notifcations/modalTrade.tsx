@@ -15,12 +15,12 @@ import { classNames } from '../filters/inventoryFunctions';
 import {
   setTradeConfirm,
   setTradeMove,
-} from 'renderer/store/actions/modalTrade';
-import { tradeUpAddRemove } from 'renderer/store/actions/tradeUpActions';
-import { ReducerManager } from 'renderer/functionsClasses/reducerManager';
-import { State } from 'renderer/interfaces/states';
-import { moveFromReset } from 'renderer/store/actions/moveFromActions';
-import { ConvertPricesFormatted } from 'renderer/functionsClasses/prices';
+} from '../../../../../renderer/store/actions/modalTrade';
+import { tradeUpAddRemove } from '../../../../../renderer/store/actions/tradeUpActions';
+import { ReducerManager } from '../../../../../renderer/functionsClasses/reducerManager';
+import { State } from '../../../../../renderer/interfaces/states';
+import { moveFromReset } from '../../../../../renderer/store/actions/moveFromActions';
+import { ConvertPricesFormatted } from '../../../../../renderer/functionsClasses/prices';
 import { createCSGOImage } from '../../../../functionsClasses/createCSGOImage';
 setTradeConfirm;
 export default function TradeModal() {
@@ -104,7 +104,7 @@ export default function TradeModal() {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 dark:bg-opacity-85 transition-opacity" />
+            <Dialog.Panel className="fixed inset-0 bg-gray-500 bg-opacity-75 dark:bg-opacity-85 transition-opacity" />
           </Transition.Child>
 
           {/* This element is to trick the browser into centering the modal contents. */}

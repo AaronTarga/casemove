@@ -6,9 +6,9 @@ import {  useSelector } from 'react-redux';
 import { classNames } from '../../shared/filters/inventoryFunctions';
 import { BanIcon, FireIcon } from '@heroicons/react/solid';
 import { RowHeader, RowHeaderCondition, RowHeaderPlain } from '../../Inventory/inventoryRows/headerRows';
-import { searchFilter } from 'renderer/functionsClasses/filters/search';
-import { State } from 'renderer/interfaces/states';
-import { ReducerManager } from 'renderer/functionsClasses/reducerManager';
+import { searchFilter } from '../../../../../renderer/functionsClasses/filters/search';
+import { State } from '../../../../../renderer/interfaces/states';
+import { ReducerManager } from '../../../../../renderer/functionsClasses/reducerManager';
 
 function StorageUnits() {
   const ReducerClass = new ReducerManager(useSelector);
@@ -170,7 +170,7 @@ function StorageUnits() {
 export default function FromMainComponent() {
   return (
     <Router>
-      <Route path="/" component={StorageUnits} />
+      <Route path="/" Component={StorageUnits} />
     </Router>
   );
 }

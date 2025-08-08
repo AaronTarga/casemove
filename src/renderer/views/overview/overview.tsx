@@ -48,7 +48,7 @@ function overviewContent() {
 export default function OverviewPage() {
   return (
     <Router>
-      <Route path="/" component={overviewContent} />
+      <Route path="/" Component={overviewContent} />
     </Router>
   );
 }

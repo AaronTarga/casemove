@@ -1,14 +1,14 @@
 import { Bar } from 'react-chartjs-2';
 import { useSelector } from 'react-redux';
 import Chart from 'chart.js/auto';
-import { ReducerManager } from 'renderer/functionsClasses/reducerManager';
-import { ItemRow } from 'renderer/interfaces/items';
-import { searchFilter } from 'renderer/functionsClasses/filters/search';
-import { Prices, Settings } from 'renderer/interfaces/states';
+import { ReducerManager } from '../../../../renderer/functionsClasses/reducerManager';
+import { ItemRow } from '../../../../renderer/interfaces/items';
+import { searchFilter } from '../../../../renderer/functionsClasses/filters/search';
+import { Prices, Settings } from '../../../../renderer/interfaces/states';
 import {
   ConvertPrices,
   ConvertPricesFormatted,
-} from 'renderer/functionsClasses/prices';
+} from '../../../../renderer/functionsClasses/prices';
 Chart;
 
 function runArray(

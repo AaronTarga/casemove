@@ -65,7 +65,7 @@ function content() {
 export default function inventoryContent() {
   return (
     <Router>
-      <Route path="/" component={content} />
+      <Route path="/" Component={content} />
     </Router>
   );
 }

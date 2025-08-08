@@ -1,6 +1,6 @@
 import { SearchIcon } from '@heroicons/react/solid';
 import { useDispatch, useSelector } from 'react-redux';
-import { tradeUpResetPossible, tradeUpSetMax, tradeUpSetMin, tradeUpSetSearch } from 'renderer/store/actions/tradeUpActions';
+import { tradeUpResetPossible, tradeUpSetMax, tradeUpSetMin, tradeUpSetSearch } from '../../../../renderer/store/actions/tradeUpActions';
 import CollectionsDropDown from './collectionsDropdown';
 import TradeUpOptionsDropDown from './optionsDropdown';
 

@@ -1,4 +1,4 @@
-import { SignInActionPackage } from "renderer/interfaces/store/authReducerActionsInterfaces"
+import { SignInActionPackage } from "../../../renderer/interfaces/store/authReducerActionsInterfaces"
 
 
 

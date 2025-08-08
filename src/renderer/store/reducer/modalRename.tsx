@@ -1,4 +1,4 @@
-import { RenameModal } from "renderer/interfaces/states";
+import { RenameModal } from "../../../renderer/interfaces/states";
 
 const initialState: RenameModal = {
     renameOpen: false,

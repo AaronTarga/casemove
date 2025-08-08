@@ -2,7 +2,7 @@ import {
   characteristics,
   containers,
   FilterManager,
-} from 'renderer/functionsClasses/filters/filters';
+} from '../../../../renderer/functionsClasses/filters/filters';
 
 export function InventoryGetFilterManager() {
   const ClassFilters = new FilterManager();

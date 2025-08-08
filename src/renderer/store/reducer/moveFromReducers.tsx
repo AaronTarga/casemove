@@ -1,4 +1,4 @@
-import { MoveFromReducer } from "renderer/interfaces/states";
+import { MoveFromReducer } from "../../../renderer/interfaces/states";
 
 const initialState: MoveFromReducer = {
   hideFull: false,

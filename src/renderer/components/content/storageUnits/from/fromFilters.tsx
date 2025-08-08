@@ -12,17 +12,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   moveFromClearAll,
   moveFromsetSearchField,
-} from 'renderer/store/actions/moveFromActions';
+} from '../../../../../renderer/store/actions/moveFromActions';
 import MoveModal from '../../shared/modals & notifcations/modalMove';
-import { moveModalQuerySet } from 'renderer/store/actions/modalMove actions';
+import { moveModalQuerySet } from '../../../../../renderer/store/actions/modalMove actions';
 import PricingAmount from '../../shared/filters/pricingAmount';
-import { downloadReport } from 'renderer/functionsClasses/downloadReport';
+import { downloadReport } from '../../../../../renderer/functionsClasses/downloadReport';
 import { classNames } from '../../shared/filters/inventoryFunctions';
 
 import StorageFilterDisclosure from './storageFilterDisclosure';
 import { fromGetFilterManager } from './fromFilterSetup';
-import { addMajorsFilters } from 'renderer/functionsClasses/filters/filters';
-import { searchFilter } from 'renderer/functionsClasses/filters/search';
+import { addMajorsFilters } from '../../../../../renderer/functionsClasses/filters/filters';
+import { searchFilter } from '../../../../../renderer/functionsClasses/filters/search';
 const ClassFilters = fromGetFilterManager();
 
 // ClassFilters.loadFilter(CharacteristicsFilter, true, 'Include');

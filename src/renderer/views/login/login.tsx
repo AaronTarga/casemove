@@ -45,7 +45,7 @@ function LoginPageContent() {
 export default function LoginPage() {
   return (
     <Router>
-      <Route path="/" component={LoginPageContent} />
+      <Route path="/" Component={LoginPageContent} />
     </Router>
   );
 }

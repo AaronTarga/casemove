@@ -8,19 +8,19 @@ import { useEffect, useState } from 'react';
 import QRCode from 'react-qr-code';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { LoadingButton } from 'renderer/components/content/shared/animations';
-import { classNames } from 'renderer/components/content/shared/filters/inventoryFunctions';
-import NotificationElement from 'renderer/components/content/shared/modals & notifcations/notification';
-import SteamLogo from 'renderer/components/content/shared/steamLogo';
-import { ReducerManager } from 'renderer/functionsClasses/reducerManager';
-import { State } from 'renderer/interfaces/states';
+import { LoadingButton } from '../../../renderer/components/content/shared/animations';
+import { classNames } from '../../../renderer/components/content/shared/filters/inventoryFunctions';
+import NotificationElement from '../../../renderer/components/content/shared/modals & notifcations/notification';
+import SteamLogo from '../../../renderer/components/content/shared/steamLogo';
+import { ReducerManager } from '../../../renderer/functionsClasses/reducerManager';
+import { State } from '../../../renderer/interfaces/states';
 import {
   HandleLoginObjectClass,
   LoginCommand,
   LoginCommandReturnPackage,
   LoginNotificationObject,
   LoginOptions,
-} from 'shared/Interfaces.tsx/store';
+} from '../../../shared/Interfaces.tsx/store';
 import { handleSuccess } from './HandleSuccess';
 import SteamCloseModal from './closeSteamModal';
 import LoginTabs from './components/LoginTabs';

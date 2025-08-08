@@ -1,26 +1,26 @@
 import {
-  ArrowCircleDownIcon,
-  ArrowCircleUpIcon,
+  ArrowDownCircleIcon,
+  ArrowUpCircleIcon,
   CheckCircleIcon,
-  CollectionIcon,
+  CircleStackIcon,
   ScaleIcon,
   VariableIcon,
-} from '@heroicons/react/solid';
+} from '@heroicons/react/24/solid';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import PricingAmount from 'renderer/components/content/shared/filters/pricingAmount';
-import { classNames } from 'renderer/components/content/shared/filters/inventoryFunctions';
-import TradeModal from 'renderer/components/content/shared/modals & notifcations/modalTrade';
-import { setTradeMove } from 'renderer/store/actions/modalTrade';
+import PricingAmount from '../../components/content/shared/filters/pricingAmount';
+import { classNames } from '../../components/content/shared/filters/inventoryFunctions';
+import TradeModal from '../../components/content/shared/modals & notifcations/modalTrade';
+import { setTradeMove } from '../../store/actions/modalTrade';
 import TradeUpPicker from './inventoryPickers';
 import TradeUpSideBar from './sidebar/sideBar';
 import TradeUpFilters from './filter/tradeUpFilter';
-import { ReducerManager } from 'renderer/functionsClasses/reducerManager';
-import { State } from 'renderer/interfaces/states';
-import { ConvertPrices } from 'renderer/functionsClasses/prices';
+import { ReducerManager } from '../../functionsClasses/reducerManager';
+import { State } from '../../interfaces/states';
+import { ConvertPrices } from '../../functionsClasses/prices';
 import { useState } from 'react';
-import { getAllStorages } from 'renderer/functionsClasses/storageUnits/storageUnitsFunctions';
-import { LoadingButton } from 'renderer/components/content/shared/animations';
+import { getAllStorages } from '../../functionsClasses/storageUnits/storageUnitsFunctions';
+import { LoadingButton } from '../../components/content/shared/animations';
 
 function settingsContent() {
   let ReducerClass = new ReducerManager(useSelector);
@@ -86,7 +86,7 @@ function settingsContent() {
                     style: 'currency',
                     currency: settingsData.currency,
                   }).format(totalPrice)}
-                  IconToUse={ArrowCircleUpIcon}
+                  IconToUse={ArrowUpCircleIcon}
                   colorOf={'text-red-500'}
                 />
 
@@ -96,7 +96,7 @@ function settingsContent() {
                     style: 'currency',
                     currency: settingsData.currency,
                   }).format(totalEV)}
-                  IconToUse={ArrowCircleDownIcon}
+                  IconToUse={ArrowDownCircleIcon}
                   colorOf={'text-green-500'}
                 />
                 <PricingAmount
@@ -135,7 +135,7 @@ function settingsContent() {
                           aria-hidden="true"
                         />
                       ) : (
-                        <CollectionIcon
+                        <CircleStackIcon
                           className="ml-3 dark:text-dark-white h-4 w-4 text-gray-700"
                           aria-hidden="true"
                         />
@@ -201,7 +201,7 @@ function settingsContent() {
 export default function TradeupPage() {
   return (
     <Router>
-      <Route path="/" component={settingsContent} />
+      <Route path="/" Component={settingsContent} />
     </Router>
   );
 }

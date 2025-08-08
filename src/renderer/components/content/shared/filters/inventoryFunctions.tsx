@@ -1,6 +1,6 @@
-import { ItemRow, ItemRowStorage } from 'renderer/interfaces/items';
-import { State } from 'renderer/interfaces/states';
-import { filterInventorySetSort } from 'renderer/store/actions/filtersInventoryActions';
+import { ItemRow, ItemRowStorage } from '../../../../../renderer/interfaces/items';
+import { State } from '../../../../../renderer/interfaces/states';
+import { filterInventorySetSort } from '../../../../../renderer/store/actions/filtersInventoryActions';
 import {itemCategories, itemSubCategories} from '../categories';
 
 

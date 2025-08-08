@@ -2,17 +2,17 @@ import { BeakerIcon, PencilIcon, TagIcon } from '@heroicons/react/solid';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { RowHeader, RowHeaderHiddenXL } from 'renderer/components/content/Inventory/inventoryRows/headerRows';
+import { RowHeader, RowHeaderHiddenXL } from '../../../renderer/components/content/Inventory/inventoryRows/headerRows';
 import {
   classNames,
   sortDataFunctionTwo,
-} from 'renderer/components/content/shared/filters/inventoryFunctions';
-import itemRarities from 'renderer/components/content/shared/rarities';
-import { ConvertPricesFormatted } from 'renderer/functionsClasses/prices';
-import { ReducerManager } from 'renderer/functionsClasses/reducerManager';
-import { State } from 'renderer/interfaces/states';
-import { setRenameModal } from 'renderer/store/actions/modalMove actions';
-import { tradeUpAddRemove } from 'renderer/store/actions/tradeUpActions';
+} from '../../../renderer/components/content/shared/filters/inventoryFunctions';
+import itemRarities from '../../../renderer/components/content/shared/rarities';
+import { ConvertPricesFormatted } from '../../../renderer/functionsClasses/prices';
+import { ReducerManager } from '../../../renderer/functionsClasses/reducerManager';
+import { State } from '../../../renderer/interfaces/states';
+import { setRenameModal } from '../../../renderer/store/actions/modalMove actions';
+import { tradeUpAddRemove } from '../../../renderer/store/actions/tradeUpActions';
 import { createCSGOImage } from '../../functionsClasses/createCSGOImage';
 
 function content() {

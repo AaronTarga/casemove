@@ -1,7 +1,7 @@
 
 import { Bar } from 'react-chartjs-2';
 import { useSelector } from 'react-redux';
-import {itemCategories} from 'renderer/components/content/shared/categories';
+import {itemCategories} from '../../../renderer/components/content/shared/categories';
 import Chart from 'chart.js/auto';
 Chart
 

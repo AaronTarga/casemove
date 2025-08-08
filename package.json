@@ -20,9 +20,8 @@
     "package": "electron-forge package",
     "start": "electron-forge start",
     "test": "jest",
-    "make": "electron-forge make"
+    "make": "electron-forge make --stats-error-details"
   },
-  "type": "module",
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "cross-env NODE_ENV=development eslint --cache"
@@ -74,7 +73,7 @@
     "@electron-forge/cli": "^7.8.1",
     "@electron-forge/maker-deb": "^7.8.1",
     "@electron-forge/maker-rpm": "^7.8.1",
-    "@electron-forge/maker-squirrel": "^7.8.1",
+    "@electron-forge/maker-squirrel": "^7.8.3",
     "@electron-forge/maker-zip": "^7.8.1",
     "@electron-forge/plugin-auto-unpack-natives": "^7.8.1",
     "@electron-forge/plugin-fuses": "^7.8.1",
@@ -136,6 +135,7 @@
     "terser-webpack-plugin": "^5.3.14",
     "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
+    "tsconfig-paths-webpack-plugin": "^4.2.0",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3",
     "url-loader": "^4.1.1",
@@ -146,6 +146,7 @@
   "dependencies": {
     "@electron/remote": "^2.1.2",
     "@headlessui/react": "^2.2.4",
+    "@hello-pangea/dnd": "^18.0.1",
     "@node-steam/vdf": "^2.2.0",
     "@redux-beacon/google-analytics": "^1.2.3",
     "@reduxjs/toolkit": "^2.8.2",
@@ -160,7 +161,7 @@
     "electron-log": "^5.4.1",
     "electron-redux": "^2.0.0",
     "electron-squirrel-startup": "^1.0.1",
-    "electron-store": "^10.1.0",
+    "electron-store": "^8.2.0",
     "electron-updater": "^6.6.2",
     "fernet": "^0.3.3",
     "find-process": "^2.0.0",
@@ -168,6 +169,7 @@
     "globaloffensive": "^3.2.0",
     "history": "5.x.x",
     "lodash": "^4.17.21",
+    "postcss-preset-env": "^10.2.4",
     "react": "^19.1.0",
     "react-chartjs-2": "^5.3.0",
     "react-dom": "^19.1.0",
@@ -179,7 +181,8 @@
     "regenerator-runtime": "^0.14.1",
     "steam-session": "^1.9.3",
     "steam-totp": "^2.1.2",
-    "steam-user": "^5.2.3",
+    "steam-user": "^4.29.3",
+    "ts-loader": "^9.5.2",
     "uglify-js": "^3.19.3",
     "update-electron-app": "^3.1.1",
     "webpack": "^5.100.1",

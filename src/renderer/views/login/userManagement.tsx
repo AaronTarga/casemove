@@ -1,7 +1,7 @@
 import { CheckIcon, TrashIcon } from '@heroicons/react/solid';
 import { useState } from 'react';
-import { classNames } from 'renderer/components/content/shared/filters/inventoryFunctions';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { classNames } from '../../../renderer/components/content/shared/filters/inventoryFunctions';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 
 export default function UserGrid({ clickOnProfile, deleteUser,  runDeleteUser }) {
   const [hasRun, setHasRun] = useState(false);

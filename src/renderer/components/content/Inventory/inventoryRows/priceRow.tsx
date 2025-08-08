@@ -1,16 +1,16 @@
 
-import { ConvertPricesFormatted } from "renderer/functionsClasses/prices";
+import { ConvertPricesFormatted } from "../../../../../renderer/functionsClasses/prices";
 
 
-export function RowPrice({itemRow, settingsData, pricesReducer}) { 
+export function RowPrice({itemRow, settingsData, pricesReducer}) {
     const PricesClass = new ConvertPricesFormatted(settingsData, pricesReducer)
     const price = PricesClass.getPrice(itemRow)
     const formattedPrice = PricesClass.getFormattedPrice(itemRow)
     const formattedPriceCombined = PricesClass.getFormattedPriceCombined(itemRow)
-    
+
     return (
         <>
-          
+
           {settingsData.columns.includes('Price') ?
           <td className="table-cell px-6 py-3 text-sm text-gray-500 font-medium">
             <div className="flex items-center space-x-2 justify-center rounded-full drop-shadow-lg">
@@ -28,7 +28,7 @@ export function RowPrice({itemRow, settingsData, pricesReducer}) {
               </div>
             </div>
           </td> : '' }
-            
+
         </>
       );
 }

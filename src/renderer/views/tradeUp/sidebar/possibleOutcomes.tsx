@@ -1,9 +1,9 @@
-import { CashIcon } from '@heroicons/react/solid';
+import { BanknotesIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { classNames } from 'renderer/components/content/shared/filters/inventoryFunctions';
-import { tradeUpSetPossible } from 'renderer/store/actions/tradeUpActions';
+import { classNames } from '../../../components/content/shared/filters/inventoryFunctions';
+import { tradeUpSetPossible } from '../../../store/actions/tradeUpActions';
 
 const rarityShort = {
   'Factory New': 'FN',
@@ -110,7 +110,7 @@ export default function PossibleOutcomes() {
                     </p>
                     <div className="flex items-center">
                       <p className="text-gray-500">
-                        <CashIcon className="w-4 text-gray-500 h-4 mr-1" />
+                        <BanknotesIcon className="w-4 text-gray-500 h-4 mr-1" />
                       </p>
                       <p className="text-gray-500">
                         {new Intl.NumberFormat(settingsData.locale, {

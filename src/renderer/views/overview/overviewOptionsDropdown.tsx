@@ -2,11 +2,11 @@
 import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
-import { classNames } from 'renderer/components/content/shared/filters/inventoryFunctions'
-import { Overview, Settings } from 'renderer/interfaces/states'
+import { classNames } from '../../../renderer/components/content/shared/filters/inventoryFunctions'
+import { Overview, Settings } from '../../../renderer/interfaces/states'
 import { useDispatch, useSelector } from 'react-redux'
-import { ReducerManager } from 'renderer/functionsClasses/reducerManager'
-import { setOverview } from 'renderer/store/actions/settings'
+import { ReducerManager } from '../../../renderer/functionsClasses/reducerManager'
+import { setOverview } from '../../../renderer/store/actions/settings'
 
 interface params {
     optionsObject: any

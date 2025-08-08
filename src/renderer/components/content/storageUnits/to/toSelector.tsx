@@ -3,14 +3,14 @@ import { DotsVerticalIcon, RefreshIcon, SearchIcon } from '@heroicons/react/soli
 import { Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setRenameModal } from 'renderer/store/actions/modalMove actions';
+import { setRenameModal } from '../../../../../renderer/store/actions/modalMove actions';
 import {
   moveToAddCasketToStorages,
   moveToClearAll,
   moveToSetFull,
   moveToSetHide,
   moveTosetSearchFieldStorage,
-} from 'renderer/store/actions/moveToActions';
+} from '../../../../../renderer/store/actions/moveToActions';
 import { createCSGOImage } from '../../../../functionsClasses/createCSGOImage';
 import EmptyComponent from '../../shared/emptyState';
 import { classNames } from '../../shared/filters/inventoryFunctions';

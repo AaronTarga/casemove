@@ -1,8 +1,8 @@
 
 
-import { State } from "renderer/interfaces/states";
-import { inventorySetSortStorage } from "renderer/store/inventory/inventoryActions";
-import { SetSortOption } from "renderer/store/actions/moveFromActions";
+import { State } from "../../../../../renderer/interfaces/states";
+import { inventorySetSortStorage } from "../../../../../renderer/store/inventory/inventoryActions";
+import { SetSortOption } from "../../../../../renderer/store/actions/moveFromActions";
 import { sortDataFunction } from "../../shared/filters/inventoryFunctions";
 
 export async function onSortChange(dispatch: Function, sortValue: string, currentState: State) {

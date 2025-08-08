@@ -14,13 +14,13 @@ import {
   HashRouter as Router,
   Route
 } from 'react-router-dom';
-import { ReducerManager } from 'renderer/functionsClasses/reducerManager';
-import { State } from 'renderer/interfaces/states';
-import { ConvertPrices, RequestPrices } from 'renderer/functionsClasses/prices';
-import { downloadReport } from 'renderer/functionsClasses/downloadReport';
-import { LoadButton } from 'renderer/components/content/loadStorageUnitsButton';
+import { ReducerManager } from '../../../renderer/functionsClasses/reducerManager';
+import { State } from '../../../renderer/interfaces/states';
+import { ConvertPrices, RequestPrices } from '../../../renderer/functionsClasses/prices';
+import { downloadReport } from '../../../renderer/functionsClasses/downloadReport';
+import { LoadButton } from '../../../renderer/components/content/loadStorageUnitsButton';
 import ListBoxOptions from './overviewOptionsDropdown';
-import { OverviewLeftCharts, OverviewRightCharts, OveviewBy } from 'renderer/variables/overviewOptions';
+import { OverviewLeftCharts, OverviewRightCharts, OveviewBy } from '../../../renderer/variables/overviewOptions';
 import RightGraph from './rightGraph';
 import LeftGraph from './leftGraph';
 
@@ -328,7 +328,7 @@ function Content() {
 export default function App() {
   return (
     <Router>
-      <Route path="/stats" component={Content} />
+      <Route path="/stats" Component={Content} />
     </Router>
   );
 }

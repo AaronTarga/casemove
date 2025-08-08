@@ -9,12 +9,12 @@ import {
   moveModalAddToFail,
   moveModalResetPayload,
   moveModalUpdate,
-} from 'renderer/store/actions/modalMove actions';
-import { moveToClearAll } from 'renderer/store/actions/moveToActions';
+} from '../../../../../renderer/store/actions/modalMove actions';
+import { moveToClearAll } from '../../../../../renderer/store/actions/moveToActions';
 import {
   moveFromClearAll,
   moveFromReset,
-} from 'renderer/store/actions/moveFromActions';
+} from '../../../../../renderer/store/actions/moveFromActions';
 
 export default function MoveModal() {
   const waitTime = 100;
@@ -143,7 +143,7 @@ export default function MoveModal() {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 dark:bg-opacity-85 transition-opacity" />
+            <Dialog.Panel className="fixed inset-0 bg-gray-500 bg-opacity-75 dark:bg-opacity-85 transition-opacity" />
           </Transition.Child>
 
           {/* This element is to trick the browser into centering the modal contents. */}

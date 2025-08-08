@@ -1,4 +1,4 @@
-import { ItemRow, ItemRowStorage } from "renderer/interfaces/items"
+import { ItemRow, ItemRowStorage } from "../../renderer/interfaces/items"
 import { Filter } from "./filters"
 import { OverviewOptionsLeftCharts, OverviewOptionsRightCharts } from "./overview"
 

@@ -10,10 +10,10 @@ import {
 } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import { useSelector } from 'react-redux';
-import {itemCategories} from 'renderer/components/content/shared/categories';
+import {itemCategories} from '../../../renderer/components/content/shared/categories';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { ConvertPrices } from 'renderer/functionsClasses/prices';
-import { ReducerManager } from 'renderer/functionsClasses/reducerManager';
+import { ConvertPrices } from '../../../renderer/functionsClasses/prices';
+import { ReducerManager } from '../../../renderer/functionsClasses/reducerManager';
 
 
 ChartJS.register(

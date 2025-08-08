@@ -1,4 +1,4 @@
-import { Settings } from "renderer/interfaces/states";
+import { Settings } from "../../../renderer/interfaces/states";
 
 const initialState: Settings = {
   fastMove: false,
@@ -43,13 +43,13 @@ const settingsReducer = (state = initialState, action) => {
         ...state,
         currency: action.payload,
       };
-    
+
     case 'SETTINGS_SET_STEAMLOGINSHOW':
       return {
         ...state,
         steamLoginShow: action.payload,
       };
-      
+
     case 'SETTINGS_SET_SOURCE':
       return {
         ...state,

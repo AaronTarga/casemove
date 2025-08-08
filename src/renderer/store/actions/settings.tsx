@@ -1,5 +1,5 @@
-import { Overview } from "renderer/interfaces/states"
-import { CurrencyReturnValue } from "shared/Interfaces.tsx/IPCReturn"
+import { Overview } from "../../../renderer/interfaces/states"
+import { CurrencyReturnValue } from "../../../shared/Interfaces.tsx/IPCReturn"
 
 export const setFastMove = (valueToSet) => {
   return {

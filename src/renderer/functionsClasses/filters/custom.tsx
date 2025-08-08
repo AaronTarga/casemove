@@ -1,5 +1,5 @@
-import { Filter } from "renderer/interfaces/filters";
-import { ItemRow } from "renderer/interfaces/items";
+import { Filter } from "../../../renderer/interfaces/filters";
+import { ItemRow } from "../../../renderer/interfaces/items";
 
 
 class CheckFilter {

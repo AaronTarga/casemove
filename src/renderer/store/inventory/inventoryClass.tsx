@@ -1,4 +1,4 @@
-import { Inventory } from "renderer/interfaces/states";
+import { Inventory } from "../../../renderer/interfaces/states";
 import { InventoryMatchingObject } from "./inventoryInterfaces";
 
 const initialState: Inventory = {

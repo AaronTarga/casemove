@@ -1,8 +1,8 @@
-import { sortDataFunction } from "renderer/components/content/shared/filters/inventoryFunctions"
-import { Filter } from "renderer/interfaces/filters"
-import { State } from "renderer/interfaces/states"
+import { sortDataFunction } from "../../../renderer/components/content/shared/filters/inventoryFunctions"
+import { Filter } from "../../../renderer/interfaces/filters"
+import { State } from "../../../renderer/interfaces/states"
 import _ from 'lodash';
-import { filterItemRows } from "renderer/functionsClasses/filters/custom";
+import { filterItemRows } from "../../../renderer/functionsClasses/filters/custom";
 
 export const allButClear = (filterString: any, sortValue, inventoryFiltered) => {
     return {

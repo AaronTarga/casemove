@@ -2,7 +2,7 @@
 import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeRenameModal } from 'renderer/store/actions/modalMove actions';
+import { closeRenameModal } from '../../../../../renderer/store/actions/modalMove actions';
 import { classNames } from '../filters/inventoryFunctions';
 import { createCSGOImage } from '../../../../functionsClasses/createCSGOImage';
 
@@ -40,7 +40,7 @@ export default function RenameModal() {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 dark:bg-opacity-85 transition-opacity" />
+            <Dialog.Panel className="fixed inset-0 bg-gray-500 bg-opacity-75 dark:bg-opacity-85 transition-opacity" />
           </Transition.Child>
 
           {/* This element is to trick the browser into centering the modal contents. */}

@@ -1,4 +1,4 @@
-import { TradeUpActions } from "renderer/interfaces/states";
+import { TradeUpActions } from "../../../renderer/interfaces/states";
 
 const initialState: TradeUpActions = {
     tradeUpProducts: [],

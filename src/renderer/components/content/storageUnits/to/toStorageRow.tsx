@@ -1,8 +1,8 @@
 import { LightningBoltIcon, XIcon } from '@heroicons/react/solid';
 import { useDispatch, useSelector } from 'react-redux';
-import { RequestPrices } from 'renderer/functionsClasses/prices';
-import { State } from 'renderer/interfaces/states';
-import { moveToAddRemove } from 'renderer/store/actions/moveToActions';
+import { RequestPrices } from '../../../../../renderer/functionsClasses/prices';
+import { State } from '../../../../../renderer/interfaces/states';
+import { moveToAddRemove } from '../../../../../renderer/store/actions/moveToActions';
 import { RowCollections } from '../../Inventory/inventoryRows/collectionsRow';
 import { RowFloat } from '../../Inventory/inventoryRows/floatRow';
 import { RowPrice } from '../../Inventory/inventoryRows/priceRow';

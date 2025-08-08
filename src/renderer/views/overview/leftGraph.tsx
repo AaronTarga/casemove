@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import { ReducerManager } from "renderer/functionsClasses/reducerManager";
-import { Settings } from "renderer/interfaces/states";
+import { ReducerManager } from "../../../renderer/functionsClasses/reducerManager";
+import { Settings } from "../../../renderer/interfaces/states";
 import EmptyField from "./EmptyField";
 import OverallVolume from "./leftGraph/barChartOverall";
 
@@ -24,14 +24,13 @@ export default function LeftGraph() {
     }
     console.log(Fitting)
 
-   
-  
- 
-  
+
+
+
+
     return (
       <>
       <Fitting />
       </>
     );
   }
-  

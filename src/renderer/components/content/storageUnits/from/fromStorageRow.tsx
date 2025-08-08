@@ -1,6 +1,6 @@
 import { LightningBoltIcon, XIcon } from '@heroicons/react/solid';
 import { useDispatch, useSelector } from 'react-redux';
-import { moveFromAddRemove } from 'renderer/store/actions/moveFromActions';
+import { moveFromAddRemove } from '../../../../../renderer/store/actions/moveFromActions';
 import { RowPrice } from '../../Inventory/inventoryRows/priceRow';
 import { RowStickersPatches } from '../../Inventory/inventoryRows/stickerPatchesRow';
 import { RowStorage } from '../../Inventory/inventoryRows/storageRow';
@@ -11,8 +11,8 @@ import { RowTradehold } from '../../Inventory/inventoryRows/tradeholdRow';
 import { RowQTY } from '../../Inventory/inventoryRows/QTYRow';
 import { RowCollections } from '../../Inventory/inventoryRows/collectionsRow';
 import { RowProduct } from '../../Inventory/inventoryRows/rowName';
-import { ReducerManager } from 'renderer/functionsClasses/reducerManager';
-import { State } from 'renderer/interfaces/states';
+import { ReducerManager } from '../../../../../renderer/functionsClasses/reducerManager';
+import { State } from '../../../../../renderer/interfaces/states';
 
 function content({ projectRow, index }) {
   const dispatch = useDispatch();
@@ -63,7 +63,7 @@ function content({ projectRow, index }) {
       )
     );
   }
-  
+
 
   const isEmpty =
     fromReducer.totalToMove.filter((row) => row[0] == projectRow.item_id)

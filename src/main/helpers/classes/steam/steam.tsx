@@ -10,7 +10,7 @@ import {
 
 const ClassLoginResponse = new LoginGenerator();
 // 1: If the user has remembered the account, check if login key exists. If login fails, notify renderer, delete Loginkey (not password)
-class login {
+export class login {
   steamUser = {} as any;
   rememberedDetails = {} as any;
   rememberedSensitive = {} as any;
@@ -206,8 +206,3 @@ class login {
     this._loginStart();
   }
 }
-
-module.exports = {
-  login,
-};
-export { login };

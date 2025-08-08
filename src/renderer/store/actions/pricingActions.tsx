@@ -1,4 +1,4 @@
-import { ItemRow } from "renderer/interfaces/items"
+import { ItemRow } from "../../../renderer/interfaces/items"
 
 export const pricing_addPrice = (itemRows) => {
     return {

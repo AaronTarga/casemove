@@ -1,5 +1,5 @@
 
-import { ModalTrade } from "renderer/interfaces/states";
+import { ModalTrade } from "../../../renderer/interfaces/states";
 
 const initialState: ModalTrade = {
     moveOpen: false,

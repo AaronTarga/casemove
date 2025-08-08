@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { GithubResponse } from 'main/interfaces/mainInterfaces';
+import { GithubResponse } from '../../main/interfaces/mainInterfaces';
 
 
-async function getGithubVersion(platform: string): Promise<GithubResponse> {
+export async function getGithubVersion(platform: string): Promise<GithubResponse> {
   return new Promise((resolve) => {
     axios
       .get('https://api.github.com/repos/AaronTaga/casemove/releases')
@@ -47,5 +47,3 @@ async function getGithubVersion(platform: string): Promise<GithubResponse> {
       });
   });
 }
-
-export { getGithubVersion };

@@ -4,10 +4,10 @@ import { Dialog, Transition } from '@headlessui/react'
 import {  XIcon } from '@heroicons/react/outline'
 import { LoginIcon } from '@heroicons/react/solid'
 import { handleSuccess } from './HandleSuccess'
-import { LoginCommand, LoginCommandReturnPackage } from 'shared/Interfaces.tsx/store'
+import { LoginCommand, LoginCommandReturnPackage } from '../../../shared/Interfaces.tsx/store'
 import { useDispatch, useSelector } from 'react-redux'
-import { State } from 'renderer/interfaces/states'
-import { ReducerManager } from 'renderer/functionsClasses/reducerManager'
+import { State } from '../../../renderer/interfaces/states'
+import { ReducerManager } from '../../../renderer/functionsClasses/reducerManager'
 
 export default function ConfirmModal({open, setOpen, setLoadingButton}) {
   const dispatch = useDispatch();

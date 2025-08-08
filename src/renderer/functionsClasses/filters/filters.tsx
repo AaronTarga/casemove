@@ -1,12 +1,12 @@
-import { itemSubCategories } from 'renderer/components/content/shared/categories';
+import { itemSubCategories } from '../../../renderer/components/content/shared/categories';
 import {
   ClassOptionFilter,
   Filter,
   FilterRequirement,
   Filters,
   FiltersRequirement,
-} from 'renderer/interfaces/filters';
-import { ItemRow } from 'renderer/interfaces/items';
+} from '../../../renderer/interfaces/filters';
+import { ItemRow } from '../../../renderer/interfaces/items';
 import _ from 'lodash';
 
 export class FilterManager {

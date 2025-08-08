@@ -1,4 +1,4 @@
-import { Prices } from "renderer/interfaces/states";
+import { Prices } from "../../../renderer/interfaces/states";
 
 const initialState: Prices = {
   prices: {},

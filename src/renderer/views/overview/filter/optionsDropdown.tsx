@@ -1,16 +1,16 @@
 import { Fragment } from 'react'
 import {  Popover, Transition } from '@headlessui/react'
 import { useDispatch, useSelector } from 'react-redux';
-import { tradeUpOptionsAddRemove } from 'renderer/store/actions/tradeUpActions';
+import { tradeUpOptionsAddRemove } from '../../../../renderer/store/actions/tradeUpActions';
 
 let optionsAvailable = ['Hide equipped']
 
 export default function TradeUpOptionsDropDown() {
-  
+
   const tradeUpData = useSelector((state: any) => state.tradeUpReducer);
   const dispatch = useDispatch();
-  
-  
+
+
   return (
     <Popover.Group className="-mx-4 flex items-center divide-x divide-gray-200">
                     <Popover className="pl-4 relative inline-block text-left">
@@ -19,10 +19,10 @@ export default function TradeUpOptionsDropDown() {
                       <span className="mr-1.5 ml-1.5 rounded py-0.5 px-1.5 bg-gray-200 dark:bg-dark-level-four dark:text-gray-400 text-xs font-semibold text-gray-700 tabular-nums">
                             {tradeUpData.options.length}
                           </span>
-                        
-                        
-                        
-                        
+
+
+
+
                       </Popover.Button>
 
                       <Transition

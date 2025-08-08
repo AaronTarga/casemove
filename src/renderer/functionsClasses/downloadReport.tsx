@@ -1,5 +1,5 @@
-import { ItemRow, ItemRowStorage } from "renderer/interfaces/items";
-import { Prices, Settings } from "renderer/interfaces/states";
+import { ItemRow, ItemRowStorage } from "../../renderer/interfaces/items";
+import { Prices, Settings } from "../../renderer/interfaces/states";
 import { ConvertPricesFormatted } from "./prices";
 
 async function handleDownload(storageData) {

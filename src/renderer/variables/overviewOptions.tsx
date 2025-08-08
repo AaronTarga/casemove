@@ -1,4 +1,4 @@
-import { OverviewOptionsBy, OverviewOptionsLeftCharts, OverviewOptionsRightCharts } from "renderer/interfaces/overview";
+import { OverviewOptionsBy, OverviewOptionsLeftCharts, OverviewOptionsRightCharts } from "../../renderer/interfaces/overview";
 export const OveviewBy: OverviewOptionsBy = {
     price: 'Price',
     volume: 'Volume'

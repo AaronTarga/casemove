@@ -11,19 +11,19 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { classNames } from '../../shared/filters/inventoryFunctions';
 import MoveModal from '../../shared/modals & notifcations/modalMove';
-import { moveModalQuerySet } from 'renderer/store/actions/modalMove actions';
+import { moveModalQuerySet } from '../../../../../renderer/store/actions/modalMove actions';
 import {
   moveToClearAll,
   moveTosetSearchField,
   moveToSetStorageAmount,
-} from 'renderer/store/actions/moveToActions';
+} from '../../../../../renderer/store/actions/moveToActions';
 import PricingAmount from '../../shared/filters/pricingAmount';
 import InventoryFiltersDisclosure from '../../Inventory/filtersDisclosure';
-import { searchFilter } from 'renderer/functionsClasses/filters/search';
-import { ReducerManager } from 'renderer/functionsClasses/reducerManager';
-import { ConvertPrices } from 'renderer/functionsClasses/prices';
+import { searchFilter } from '../../../../../renderer/functionsClasses/filters/search';
+import { ReducerManager } from '../../../../../renderer/functionsClasses/reducerManager';
+import { ConvertPrices } from '../../../../../renderer/functionsClasses/prices';
 import { toGetFilterManager } from './toFilterSetup';
-import { addMajorsFilters } from 'renderer/functionsClasses/filters/filters';
+import { addMajorsFilters } from '../../../../../renderer/functionsClasses/filters/filters';
 const ClassFilters = toGetFilterManager()
 
 function content() {

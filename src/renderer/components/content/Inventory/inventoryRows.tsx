@@ -1,10 +1,10 @@
 
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { searchFilter } from 'renderer/functionsClasses/filters/search';
-import { RequestPrices } from 'renderer/functionsClasses/prices';
-import { ReducerManager } from 'renderer/functionsClasses/reducerManager';
-import { State } from 'renderer/interfaces/states';
+import { searchFilter } from '../../../../renderer/functionsClasses/filters/search';
+import { RequestPrices } from '../../../../renderer/functionsClasses/prices';
+import { ReducerManager } from '../../../../renderer/functionsClasses/reducerManager';
+import { State } from '../../../../renderer/interfaces/states';
 import { classNames, sortDataFunction } from '../shared/filters/inventoryFunctions';
 import RenameModal from '../shared/modals & notifcations/modalRename';
 import { RowCollections } from './inventoryRows/collectionsRow';

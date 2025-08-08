@@ -9,8 +9,8 @@ import {
 } from '../../shared/filters/inventoryFunctions';
 import { useState } from 'react';
 import { BanIcon, FireIcon } from '@heroicons/react/solid';
-import { searchFilter } from 'renderer/functionsClasses/filters/search';
-import { State } from 'renderer/interfaces/states';
+import { searchFilter } from '../../../../../renderer/functionsClasses/filters/search';
+import { State } from '../../../../../renderer/interfaces/states';
 import {
   RowHeader,
   RowHeaderCondition,
@@ -223,7 +223,7 @@ function StorageUnits() {
 export default function ToContent() {
   return (
     <Router>
-      <Route path="/" component={StorageUnits} />
+      <Route path="/" Component={StorageUnits} />
     </Router>
   );
 }

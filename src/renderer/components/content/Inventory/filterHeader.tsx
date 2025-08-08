@@ -9,17 +9,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   filterInventoryClearAll,
   inventoryFilterSetSearch,
-} from 'renderer/store/actions/filtersInventoryActions';
+} from '../../../../renderer/store/actions/filtersInventoryActions';
 import { classNames } from '../shared/filters/inventoryFunctions';
 import PricingAmount from '../shared/filters/pricingAmount';
 import MoveLeft from '../shared/filters/inventoryAmount';
 import AccountAmount from '../shared/filters/accountAmount';
-import { searchFilter } from 'renderer/functionsClasses/filters/search';
-import { ConvertPrices } from 'renderer/functionsClasses/prices';
-import { ReducerManager } from 'renderer/functionsClasses/reducerManager';
-import { downloadReport } from 'renderer/functionsClasses/downloadReport';
+import { searchFilter } from '../../../../renderer/functionsClasses/filters/search';
+import { ConvertPrices } from '../../../../renderer/functionsClasses/prices';
+import { ReducerManager } from '../../../../renderer/functionsClasses/reducerManager';
+import { downloadReport } from '../../../../renderer/functionsClasses/downloadReport';
 import InventoryFiltersDisclosure from './filtersDisclosure';
-import { addMajorsFilters } from 'renderer/functionsClasses/filters/filters';
+import { addMajorsFilters } from '../../../../renderer/functionsClasses/filters/filters';
 import { InventoryGetFilterManager } from './inventoryFilterSetup';
 
 const ClassFilters = InventoryGetFilterManager()
@@ -174,7 +174,7 @@ function content() {
 export default function InventoryFilters() {
   return (
     <Router>
-      <Route path="/" component={content} />
+      <Route path="/" Component={content} />
     </Router>
   );
 }

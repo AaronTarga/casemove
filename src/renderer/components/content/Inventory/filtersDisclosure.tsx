@@ -2,13 +2,13 @@ import { Disclosure } from '@headlessui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   filterInventoryAddOption,
-} from 'renderer/store/actions/filtersInventoryActions';
-import { searchFilter } from 'renderer/functionsClasses/filters/search';
-import { ConvertPrices } from 'renderer/functionsClasses/prices';
-import { ReducerManager } from 'renderer/functionsClasses/reducerManager';
-import { Filter, Filters } from 'renderer/interfaces/filters';
+} from '../../../../renderer/store/actions/filtersInventoryActions';
+import { searchFilter } from '../../../../renderer/functionsClasses/filters/search';
+import { ConvertPrices } from '../../../../renderer/functionsClasses/prices';
+import { ReducerManager } from '../../../../renderer/functionsClasses/reducerManager';
+import { Filter, Filters } from '../../../../renderer/interfaces/filters';
 import _ from 'lodash';
-import { State } from 'renderer/interfaces/states';
+import { State } from '../../../../renderer/interfaces/states';
 
 
 

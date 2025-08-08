@@ -8,13 +8,13 @@ import {
 } from '@heroicons/react/outline';
 import {
   ChartBarIcon,
-  DownloadIcon,
-  InboxInIcon,
-  RefreshIcon,
-  SearchIcon,
-  SelectorIcon,
-  UploadIcon,
-} from '@heroicons/react/solid';
+  ArrowDownTrayIcon,
+  InboxArrowDownIcon,
+  ArrowPathIcon,
+  MagnifyingGlassIcon,
+  ChevronUpDownIcon,
+  ArrowUpTrayIcon,
+} from '@heroicons/react/24/solid';
 import { Fragment, SetStateAction, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -25,7 +25,6 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
-import 'tailwindcss/tailwind.css';
 import inventoryContent from './components/content/Inventory/inventory';
 import { itemCategories } from './components/content/shared/categories';
 import {
@@ -59,6 +58,7 @@ import LoginPage from './views/login/login';
 import OverviewPage from './views/overview/overview';
 import settingsPage from './views/settings/settings';
 import TradeupPage from './views/tradeUp/tradeUp';
+import { ItemRow } from './interfaces/items';
 DocumentDownloadIcon;
 
 //{ name: 'Reports', href: '/reports', icon: DocumentDownloadIcon, current: false }
@@ -67,13 +67,13 @@ const navigation = [
   {
     name: 'Transfer | From',
     href: '/transferfrom',
-    icon: DownloadIcon,
+    icon: ArrowDownTrayIcon,
     current: false,
   },
   {
     name: 'Transfer | To',
     href: '/transferto',
-    icon: UploadIcon,
+    icon: ArrowUpTrayIcon,
     current: false,
   },
   { name: 'Inventory', href: '/inventory', icon: ArchiveIcon, current: false },
@@ -81,7 +81,7 @@ const navigation = [
 ];
 
 function AppContent() {
-  SearchIcon;
+  MagnifyingGlassIcon;
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isListening, setIsListening] = useState(false);
@@ -123,7 +123,7 @@ function AppContent() {
   const StoreClass = new DispatchStore(dispatch);
   const IPCClass = new DispatchIPC(dispatch);
 
-  async function handleFilterData(combinedInventory: itemRow[]) {
+  async function handleFilterData(combinedInventory: ItemRow[]) {
     if (
       filterDetails.inventoryFilter.length > 0 ||
       filterDetails.sortValue != 'Default'
@@ -272,7 +272,7 @@ function AppContent() {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Dialog.Overlay className="fixed inset-0 bg-gray-600 bg-opacity-75" />
+              <Dialog.Panel className="fixed inset-0 bg-gray-600 bg-opacity-75" />
             </Transition.Child>
             <Transition.Child
               as={Fragment}
@@ -463,7 +463,7 @@ function AppContent() {
                         </span>
                       </span>
                     </span>
-                    <SelectorIcon
+                    <ChevronUpDownIcon
                       className="flex-shrink-0 h-5 w-5 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
@@ -527,7 +527,7 @@ function AppContent() {
                   onClick={() => retryConnection()}
                   className="inline-flex items-center bg-green-200 px-6 shadow-md py-3 text-left text-base w-full font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 hover:shadow-none focus:outline-none pl-9 sm:text-sm border-gray-300 rounded-md h-9 text-gray-400"
                 >
-                  <RefreshIcon
+                  <ArrowPathIcon
                     className="mr-3 h-4 w-4 text-green-900"
                     style={{ marginLeft: -25 }}
                     aria-hidden="true"
@@ -540,7 +540,7 @@ function AppContent() {
                   disabled={true}
                   className="inline-flex items-center my-4 bg-green-200 px-6 shadow-md py-3 text-left text-base w-full font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 hover:shadow-none focus:outline-none pl-9 sm:text-sm border-gray-300 rounded-md h-9 text-gray-400"
                 >
-                  <InboxInIcon
+                  <InboxArrowDownIcon
                     className="mr-3 h-4 w-4 text-gray-500"
                     style={{ marginLeft: -22 }}
                     aria-hidden="true"
@@ -781,7 +781,7 @@ function AppContent() {
                       onClick={() => retryConnection()}
                       className="inline-flex items-center bg-green-200 px-6 shadow-md py-3 text-left text-base w-full font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none pl-9 sm:text-sm border-gray-300 rounded-md h-9 text-gray-400"
                     >
-                      <RefreshIcon
+                      <ArrowPathIcon
                         className="mr-3 h-4 w-4 text-green-900 "
                         style={{ marginLeft: -25 }}
                         aria-hidden="true"
@@ -799,7 +799,7 @@ function AppContent() {
                         type="button"
                         className="inline-flex items-center px-6 py-3 border border-gray-200 text-left text-base w-full font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none pl-9 sm:text-sm border-gray-300 rounded-md h-9 text-gray-400"
                       >
-                        <InboxInIcon
+                        <InboxArrowDownIcon
                           className="mr-3 h-4 w-4 text-gray-500"
                           style={{ marginLeft: -22 }}
                           aria-hidden="true"

@@ -20,7 +20,7 @@ function StorageUnits() {
 export default function StorageUnitsComponent() {
   return (
     <Router>
-      <Route path="/transferfrom" component={StorageUnits} />
+      <Route path="/transferfrom" Component={StorageUnits} />
     </Router>
   );
 }

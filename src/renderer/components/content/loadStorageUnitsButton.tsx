@@ -1,9 +1,9 @@
 import { CollectionIcon } from "@heroicons/react/solid";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ReducerManager } from "renderer/functionsClasses/reducerManager";
-import { getAllStorages } from "renderer/functionsClasses/storageUnits/storageUnitsFunctions";
-import { State } from "renderer/interfaces/states";
+import { ReducerManager } from "../../../renderer/functionsClasses/reducerManager";
+import { getAllStorages } from "../../../renderer/functionsClasses/storageUnits/storageUnitsFunctions";
+import { State } from "../../../renderer/interfaces/states";
 import { LoadingButton } from "./shared/animations";
 import { classNames } from "./shared/filters/inventoryFunctions";
 

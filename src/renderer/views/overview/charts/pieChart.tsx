@@ -10,10 +10,10 @@ import {
 } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { ConvertPricesFormatted } from 'renderer/functionsClasses/prices';
-import { ReducerManager } from 'renderer/functionsClasses/reducerManager';
+import { ConvertPricesFormatted } from '../../../../renderer/functionsClasses/prices';
+import { ReducerManager } from '../../../../renderer/functionsClasses/reducerManager';
 import { useSelector } from 'react-redux';
-import { Prices, Settings } from 'renderer/interfaces/states';
+import { Prices, Settings } from '../../../../renderer/interfaces/states';
 
 ChartJS.register(
   RadialLinearScale,

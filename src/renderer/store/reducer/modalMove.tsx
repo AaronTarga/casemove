@@ -1,4 +1,4 @@
-import { ModalMove } from "renderer/interfaces/states";
+import { ModalMove } from "../../../renderer/interfaces/states";
 
 const initialState: ModalMove = {
     moveOpen: false,

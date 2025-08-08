@@ -1,5 +1,5 @@
-import { ItemRow } from "renderer/interfaces/items";
-import { WalletInterface } from "renderer/interfaces/states";
+import { ItemRow } from "../../renderer/interfaces/items";
+import { WalletInterface } from "../../renderer/interfaces/states";
 
 export interface LoginCommandReturnPackage {
   steamID: string

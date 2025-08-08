@@ -1,18 +1,19 @@
 import { getValue, setValue } from './settings';
+import axios from 'axios';
+import EventEmitter from 'events';
+import dotenv from 'dotenv';
+dotenv.config()
 
-const axios = require('axios');
-require('dotenv').config();
-const EventEmitter = require('events');
 class MyEmitter extends EventEmitter {}
-const pricingEmitter = new MyEmitter();
+export const pricingEmitter = new MyEmitter();
 
 // Get latest prices, if fail use backup
 
-async function getPricesBackup(cas) {
+export async function getPricesBackup(cas) {
   const pricesBackup = require('./backup/prices.json');
   cas.setPricing(pricesBackup);
 }
-async function getPrices(cas) {
+export async function getPrices(cas) {
   const url = 'https://cdn.skinledger.com/casemove/prices.json';
   axios
     .get(url)
@@ -34,7 +35,7 @@ async function getPrices(cas) {
     });
 }
 
-let currencyCodes = {
+export let currencyCodes = {
   1: 'USD',
   2: 'GBP',
   3: 'EUR',
@@ -86,7 +87,7 @@ let currencyCodes = {
 
 // import { DOMParser } from 'xmldom'
 // RUN PROGRAMS
-class runItems {
+export class runItems {
   steamUser;
   seenItems;
   packageToSend;
@@ -183,9 +184,3 @@ class runItems {
     pricingEmitter.emit('result', itemRow);
   }
 }
-module.exports = {
-  runItems,
-  pricingEmitter,
-  currencyCodes,
-};
-export { runItems, pricingEmitter, currencyCodes };

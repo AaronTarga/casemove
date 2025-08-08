@@ -9,12 +9,12 @@ import {
   LinearScale,
 } from 'chart.js';
 import { useSelector } from 'react-redux';
-import { itemCategories } from 'renderer/components/content/shared/categories';
+import { itemCategories } from '../../../../renderer/components/content/shared/categories';
 import { categoriesRGB } from './categoriesRGB';
 import PieChart from '../charts/pieChart';
-import { ReducerManager } from 'renderer/functionsClasses/reducerManager';
-import { ConvertPrices } from 'renderer/functionsClasses/prices';
-import { Settings } from 'renderer/interfaces/states';
+import { ReducerManager } from '../../../../renderer/functionsClasses/reducerManager';
+import { ConvertPrices } from '../../../../renderer/functionsClasses/prices';
+import { Settings } from '../../../../renderer/interfaces/states';
 
 
 ChartJS.register(

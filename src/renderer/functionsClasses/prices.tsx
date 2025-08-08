@@ -1,6 +1,6 @@
-import { ItemRow } from 'renderer/interfaces/items';
-import { Prices, Settings } from 'renderer/interfaces/states';
-import { pricing_add_to_requested } from 'renderer/store/actions/pricingActions';
+import { ItemRow } from '../interfaces/items';
+import { Prices, Settings } from '../interfaces/states';
+import { pricing_add_to_requested } from '../store/actions/pricingActions';
 
 export class ConvertPrices {
   settingsData: Settings;

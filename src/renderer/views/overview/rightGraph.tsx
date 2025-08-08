@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import { ReducerManager } from "renderer/functionsClasses/reducerManager";
-import { Settings } from "renderer/interfaces/states";
+import { ReducerManager } from "../../../renderer/functionsClasses/reducerManager";
+import { Settings } from "../../../renderer/interfaces/states";
 import EmptyField from "./EmptyField";
 import ItemDistributionByVolume from "./categoryDistribution/categoryDistribution";
 
@@ -21,14 +21,13 @@ export default function RightGraph() {
       }
     console.log(by)
 
-   
-  
- 
-  
+
+
+
+
     return (
       <>
       <Fitting />
       </>
     );
   }
-  

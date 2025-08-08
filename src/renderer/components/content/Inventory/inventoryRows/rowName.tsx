@@ -2,7 +2,7 @@ import { PencilIcon, TagIcon } from "@heroicons/react/solid";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { setRenameModal } from "renderer/store/actions/modalMove actions";
+import { setRenameModal } from "../../../../../renderer/store/actions/modalMove actions";
 import { createCSGOImage } from "../../../../functionsClasses/createCSGOImage";
 import { classNames } from "../../shared/filters/inventoryFunctions";
 

@@ -1,11 +1,11 @@
 import { Bar } from 'react-chartjs-2';
 import { useSelector } from 'react-redux';
 import Chart from 'chart.js/auto';
-import { ReducerManager } from 'renderer/functionsClasses/reducerManager';
-import { ItemRow } from 'renderer/interfaces/items';
-import { searchFilter } from 'renderer/functionsClasses/filters/search';
-import { Settings } from 'renderer/interfaces/states';
-import { ConvertPrices } from 'renderer/functionsClasses/prices';
+import { ReducerManager } from '../../../../renderer/functionsClasses/reducerManager';
+import { ItemRow } from '../../../../renderer/interfaces/items';
+import { searchFilter } from '../../../../renderer/functionsClasses/filters/search';
+import { Settings } from '../../../../renderer/interfaces/states';
+import { ConvertPrices } from '../../../../renderer/functionsClasses/prices';
 Chart;
 
 function runArray(arrayToRun: Array<ItemRow>, objectToUse: any, by: string, PricingConverter) {
@@ -23,7 +23,7 @@ function runArray(arrayToRun: Array<ItemRow>, objectToUse: any, by: string, Pric
 
 function getObject(arrayToRun: Array<ItemRow>, objectToUse: any, by: string, PricingConverter) {
   arrayToRun = arrayToRun.filter((itemRow) => itemRow.item_moveable);
-  
+
 
   arrayToRun.forEach((element) => {
     if (objectToUse[element.item_name] == undefined) {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { classNames } from 'renderer/components/content/shared/filters/inventoryFunctions';
-import { tradeUpAddRemove } from 'renderer/store/actions/tradeUpActions';
+import { classNames } from '../../../../renderer/components/content/shared/filters/inventoryFunctions';
+import { tradeUpAddRemove } from '../../../../renderer/store/actions/tradeUpActions';
 import { createCSGOImage } from '../../../functionsClasses/createCSGOImage';
 import PossibleOutcomes from './possibleOutcomes';
 

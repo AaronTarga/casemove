@@ -1,8 +1,8 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTradeMoveResult } from 'renderer/store/actions/modalTrade';
-import { tradeUpResetPossible } from 'renderer/store/actions/tradeUpActions';
+import { setTradeMoveResult } from '../../../../../renderer/store/actions/modalTrade';
+import { tradeUpResetPossible } from '../../../../../renderer/store/actions/tradeUpActions';
 import { createCSGOImage } from '../../../../functionsClasses/createCSGOImage';
 
 export default function TradeResultModal() {
@@ -34,7 +34,7 @@ export default function TradeResultModal() {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 dark:bg-opacity-85 transition-opacity" />
+            <Dialog.Panel className="fixed inset-0 bg-gray-500 bg-opacity-75 dark:bg-opacity-85 transition-opacity" />
           </Transition.Child>
 
           {/* This element is to trick the browser into centering the modal contents. */}
