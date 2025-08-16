@@ -1,6 +1,8 @@
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import {
   ArchiveIcon,
+  ArrowDownIcon,
+  ArrowUpIcon,
   BeakerIcon,
   DocumentDownloadIcon,
   MenuAlt1Icon,
@@ -8,13 +10,11 @@ import {
 } from '@heroicons/react/outline';
 import {
   ChartBarIcon,
-  ArrowDownTrayIcon,
-  InboxArrowDownIcon,
-  ArrowPathIcon,
-  MagnifyingGlassIcon,
-  ChevronUpDownIcon,
-  ArrowUpTrayIcon,
-} from '@heroicons/react/24/solid';
+  InboxInIcon,
+  RefreshIcon,
+  SearchIcon,
+  SelectorIcon,
+} from '@heroicons/react/solid';
 import { Fragment, SetStateAction, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -59,6 +59,7 @@ import OverviewPage from './views/overview/overview';
 import settingsPage from './views/settings/settings';
 import TradeupPage from './views/tradeUp/tradeUp';
 import { ItemRow } from './interfaces/items';
+import './index.css'
 DocumentDownloadIcon;
 
 //{ name: 'Reports', href: '/reports', icon: DocumentDownloadIcon, current: false }
@@ -67,13 +68,13 @@ const navigation = [
   {
     name: 'Transfer | From',
     href: '/transferfrom',
-    icon: ArrowDownTrayIcon,
+    icon: ArrowDownIcon,
     current: false,
   },
   {
     name: 'Transfer | To',
     href: '/transferto',
-    icon: ArrowUpTrayIcon,
+    icon: ArrowUpIcon,
     current: false,
   },
   { name: 'Inventory', href: '/inventory', icon: ArchiveIcon, current: false },
@@ -81,7 +82,7 @@ const navigation = [
 ];
 
 function AppContent() {
-  MagnifyingGlassIcon;
+  SearchIcon;
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isListening, setIsListening] = useState(false);
@@ -463,7 +464,7 @@ function AppContent() {
                         </span>
                       </span>
                     </span>
-                    <ChevronUpDownIcon
+                    <SelectorIcon
                       className="flex-shrink-0 h-5 w-5 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
@@ -527,7 +528,7 @@ function AppContent() {
                   onClick={() => retryConnection()}
                   className="inline-flex items-center bg-green-200 px-6 shadow-md py-3 text-left text-base w-full font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 hover:shadow-none focus:outline-none pl-9 sm:text-sm border-gray-300 rounded-md h-9 text-gray-400"
                 >
-                  <ArrowPathIcon
+                  <RefreshIcon
                     className="mr-3 h-4 w-4 text-green-900"
                     style={{ marginLeft: -25 }}
                     aria-hidden="true"
@@ -540,7 +541,7 @@ function AppContent() {
                   disabled={true}
                   className="inline-flex items-center my-4 bg-green-200 px-6 shadow-md py-3 text-left text-base w-full font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 hover:shadow-none focus:outline-none pl-9 sm:text-sm border-gray-300 rounded-md h-9 text-gray-400"
                 >
-                  <InboxArrowDownIcon
+                  <InboxInIcon
                     className="mr-3 h-4 w-4 text-gray-500"
                     style={{ marginLeft: -22 }}
                     aria-hidden="true"
@@ -781,7 +782,7 @@ function AppContent() {
                       onClick={() => retryConnection()}
                       className="inline-flex items-center bg-green-200 px-6 shadow-md py-3 text-left text-base w-full font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none pl-9 sm:text-sm border-gray-300 rounded-md h-9 text-gray-400"
                     >
-                      <ArrowPathIcon
+                      <RefreshIcon
                         className="mr-3 h-4 w-4 text-green-900 "
                         style={{ marginLeft: -25 }}
                         aria-hidden="true"
@@ -799,7 +800,7 @@ function AppContent() {
                         type="button"
                         className="inline-flex items-center px-6 py-3 border border-gray-200 text-left text-base w-full font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none pl-9 sm:text-sm border-gray-300 rounded-md h-9 text-gray-400"
                       >
-                        <InboxArrowDownIcon
+                        <InboxInIcon
                           className="mr-3 h-4 w-4 text-gray-500"
                           style={{ marginLeft: -22 }}
                           aria-hidden="true"
@@ -882,30 +883,33 @@ function AppContent() {
           </div>
           <main className="flex-1 dark:bg-dark-level-one">
           <toMoveContext.Provider value={toMoveValue}>
-            <Router>
               <Routes>
-                  {userDetails.isLoggedIn ? (
-                    <Route path="/"  element={<Navigate to="/stats" replace />} />
+              <Route path="/signin" element={<LoginPage />} />
+              <Route
+                path="/stats"
+                element={
+                  userDetails.isLoggedIn ? <OverviewPage /> : <Navigate to="/signin" />
+                }
+              />
+              <Route
+                path="/transferfrom"
+                element={
+                  userDetails.isLoggedIn ? (
+                    <StorageUnitsComponent />
                   ) : (
-                    <Route path="*" element={<Navigate to="/signin" replace />} />
-                  )}
-                  {userDetails.isLoggedIn ? (
-                    <Route path="/signin" element={<Navigate to="/stats" replace />} />
-                  ) : (
-                    ''
-                  )}
-                  <Route
-                    path="/transferfrom"
-                    Component={StorageUnitsComponent}
-                  />
-                  <Route path="/transferto" Component={ToContent} />
+                    <Navigate to="/signin" />
+                  )
+                }
+              />
+              <Route path="/transferto" Component={ToContent} />
+              <Route path="/transferto" Component={ToContent} />
                   <Route path="/signin" Component={LoginPage} />
                   <Route path="/inventory" Component={inventoryContent} />
                   <Route path="/tradeup" Component={TradeupPage} />
                   <Route path="/settings" Component={settingsPage} />
                   <Route path="/stats" Component={OverviewPage} />
-              </Routes>
-            </Router>
+              <Route path="*" element={<Navigate to="/signin" />} />
+            </Routes>
             </toMoveContext.Provider>
           </main>
         </div>
@@ -917,10 +921,6 @@ function AppContent() {
 export default function App() {
 
   return (
-    <Router>
-      <Routes>
-      <Route path="*" Component={AppContent} />
-      </Routes>
-    </Router>
+      <AppContent />
   );
 }

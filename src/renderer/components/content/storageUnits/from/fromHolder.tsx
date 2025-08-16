@@ -1,7 +1,7 @@
 import StorageFilter from './fromFilters';
 import StorageRow from './fromStorageRow';
 import StorageSelectorContent from './fromSelector';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import {  useSelector } from 'react-redux';
 import { classNames } from '../../shared/filters/inventoryFunctions';
 import { BanIcon, FireIcon } from '@heroicons/react/solid';
@@ -169,8 +169,8 @@ function StorageUnits() {
 
 export default function FromMainComponent() {
   return (
-    <Router>
+    <Routes>
       <Route path="/" Component={StorageUnits} />
-    </Router>
+    </Routes>
   );
 }

@@ -1,4 +1,3 @@
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import type { ModuleOptions } from 'webpack';
 
 export const rules: Required<ModuleOptions>['rules'] = [
@@ -16,11 +15,33 @@ export const rules: Required<ModuleOptions>['rules'] = [
       options: {
         exclude: /node_modules/,
         presets: [
+          ['@babel/preset-react', {
+            runtime: 'automatic' // 👈 This is the key
+          }],
           '@babel/preset-env',
-          '@babel/preset-react', // For JSX
           '@babel/preset-typescript', // For TypeScript syntax
         ],
       }
     }
   },
+   {
+      test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                // Ensure your PostCSS plugins are correctly loaded
+                // The plugins can be defined here or in postcss.config.js
+                plugins: [
+                  require('@tailwindcss/postcss'),
+                  require('autoprefixer'),
+                ],
+            },
+            },
+          },
+        ],
+      }
 ];

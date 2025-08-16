@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import { Disclosure } from '@headlessui/react';
 import {
   DocumentDownloadIcon,
@@ -173,8 +173,9 @@ function content() {
 
 export default function InventoryFilters() {
   return (
-    <Router>
+    <Routes>
       <Route path="/" Component={content} />
-    </Router>
+    </Routes>
+
   );
 }

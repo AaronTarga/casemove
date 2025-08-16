@@ -3,6 +3,8 @@ import { Provider } from "react-redux";
 import App from "./App";
 import { PersistGate } from 'redux-persist/integration/react'
 import returnVar from './store/configureStore'
+import { BrowserRouter as Router } from 'react-router-dom';
+
 
 const myVar = returnVar();
 
@@ -17,7 +19,7 @@ declare global {
       },
       ipcRenderer: any
     }
-    
+
   }
 }
 
@@ -26,10 +28,12 @@ const container = document.getElementById('root');
 if (container != null) {
 const root = createRoot(container);
 root.render(
-   <Provider store={myVar.reduxStore}>
-    <PersistGate loading={null} persistor={myVar.persistor}>
-     <App />
-     </PersistGate>
-  </Provider>
+  <Router>
+      <Provider store={myVar.reduxStore}>
+        <PersistGate loading={null} persistor={myVar.persistor}>
+        <App />
+        </PersistGate>
+      </Provider>
+  </Router>
 );
 }

@@ -12,7 +12,8 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import {
   HashRouter as Router,
-  Route
+  Route,
+  Routes
 } from 'react-router-dom';
 import { ReducerManager } from '../../../renderer/functionsClasses/reducerManager';
 import { State } from '../../../renderer/interfaces/states';
@@ -327,8 +328,8 @@ function Content() {
 }
 export default function App() {
   return (
-    <Router>
+    <Routes>
       <Route path="/stats" Component={Content} />
-    </Router>
+    </Routes>
   );
 }

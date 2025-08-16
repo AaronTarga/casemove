@@ -1,4 +1,4 @@
-import { HashRouter as Router, Route } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import FromMainComponent from './fromHolder';
 
 function StorageUnits() {
@@ -19,8 +19,9 @@ function StorageUnits() {
 
 export default function StorageUnitsComponent() {
   return (
-    <Router>
+    <Routes>
       <Route path="/transferfrom" Component={StorageUnits} />
-    </Router>
+    </Routes>
+
   );
 }

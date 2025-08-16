@@ -2,7 +2,7 @@ import { Disclosure } from '@headlessui/react'
 import { useState } from 'react'
 import LoginForm from './loginForm'
 import UserGrid from './userManagement'
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 Disclosure
 function LoginPageContent() {
   const [getLock, setLock] = useState([''])
@@ -44,8 +44,8 @@ function LoginPageContent() {
 
 export default function LoginPage() {
   return (
-    <Router>
-      <Route path="/" Component={LoginPageContent} />
-    </Router>
+    <Routes>
+        <Route path="/" Component={LoginPageContent} />
+    </Routes>
   );
 }

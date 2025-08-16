@@ -3,6 +3,8 @@ import type { Configuration } from 'webpack';
 import { rules } from './webpack.rules';
 import { plugins } from './webpack.plugins';
 
+import path from 'path';
+
 export const mainConfig: Configuration = {
   /**
    * This is the main entry point for your application, it's the first file
@@ -14,8 +16,18 @@ export const mainConfig: Configuration = {
     rules,
   },
 
+ externals: {
+    // Treat 'lzma' as an external dependency
+    'lzma': 'commonjs lzma',
+    'steam-crypto': 'commonjs steamcrypto'
+  },
+
   plugins,
   resolve: {
+    modules: [
+      path.resolve(__dirname, 'src'),
+      'node_modules'
+    ],
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
   },
 };

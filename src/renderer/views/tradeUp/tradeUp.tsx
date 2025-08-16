@@ -1,13 +1,12 @@
 import {
-  ArrowDownCircleIcon,
-  ArrowUpCircleIcon,
+  ArrowCircleDownIcon,
+  ArrowCircleUpIcon,
   CheckCircleIcon,
-  CircleStackIcon,
   ScaleIcon,
   VariableIcon,
-} from '@heroicons/react/24/solid';
+} from '@heroicons/react/solid';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PricingAmount from '../../components/content/shared/filters/pricingAmount';
 import { classNames } from '../../components/content/shared/filters/inventoryFunctions';
 import TradeModal from '../../components/content/shared/modals & notifcations/modalTrade';
@@ -86,7 +85,7 @@ function settingsContent() {
                     style: 'currency',
                     currency: settingsData.currency,
                   }).format(totalPrice)}
-                  IconToUse={ArrowUpCircleIcon}
+                  IconToUse={ArrowCircleUpIcon}
                   colorOf={'text-red-500'}
                 />
 
@@ -96,7 +95,7 @@ function settingsContent() {
                     style: 'currency',
                     currency: settingsData.currency,
                   }).format(totalEV)}
-                  IconToUse={ArrowDownCircleIcon}
+                  IconToUse={ArrowCircleDownIcon}
                   colorOf={'text-green-500'}
                 />
                 <PricingAmount
@@ -135,7 +134,7 @@ function settingsContent() {
                           aria-hidden="true"
                         />
                       ) : (
-                        <CircleStackIcon
+                        <ScaleIcon
                           className="ml-3 dark:text-dark-white h-4 w-4 text-gray-700"
                           aria-hidden="true"
                         />
@@ -200,8 +199,8 @@ function settingsContent() {
 }
 export default function TradeupPage() {
   return (
-    <Router>
+    <Routes>
       <Route path="/" Component={settingsContent} />
-    </Router>
+    </Routes>
   );
 }

@@ -1,4 +1,4 @@
-import { BanknotesIcon } from '@heroicons/react/24/solid';
+import { CashIcon } from '@heroicons/react/solid';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -110,7 +110,7 @@ export default function PossibleOutcomes() {
                     </p>
                     <div className="flex items-center">
                       <p className="text-gray-500">
-                        <BanknotesIcon className="w-4 text-gray-500 h-4 mr-1" />
+                        <CashIcon className="w-4 text-gray-500 h-4 mr-1" />
                       </p>
                       <p className="text-gray-500">
                         {new Intl.NumberFormat(settingsData.locale, {
