@@ -12,6 +12,9 @@ export const mainConfig: Configuration = {
    */
   entry: './src/main/main.ts',
   // Put your normal webpack config below here
+  node: {
+        __dirname: true, // any value not work
+  },
   module: {
     rules,
   },
@@ -29,5 +32,5 @@ export const mainConfig: Configuration = {
       'node_modules'
     ],
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
-  },
+  }
 };

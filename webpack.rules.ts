@@ -8,10 +8,21 @@ export const rules: Required<ModuleOptions>['rules'] = [
     test: /native_modules[/\\].+\.node$/,
     use: 'node-loader',
   },
-    {
-    test: /\.tsx?$/,
+  {
+    test: /[/\\]node_modules[/\\].+\.(m?js|node)$/,
+    parser: { amd: false },
     use: {
-      loader: 'babel-loader',
+      loader: '@vercel/webpack-asset-relocator-loader',
+      options: {
+        outputAssetBase: 'native_modules',
+      },
+    },
+  },
+  {
+    test: /\.tsx?$/,
+    exclude: /(node_modules|\.webpack)/,
+    use: {
+      loader: 'ts-loader',
       options: {
         exclude: /node_modules/,
         presets: [

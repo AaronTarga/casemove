@@ -4,12 +4,12 @@ var ByteBuffer = require('bytebuffer');
 contextBridge.exposeInMainWorld('electron', {
   ipcRenderer: {
     myPing(message = 'ping') {
-      ipcRenderer.send('ipc-example', message);
+      ipcRenderer.invoke('ipc-example', message);
     },
 
     // User commands
     refreshInventory() {
-      ipcRenderer.send('refreshInventory');
+      ipcRenderer.invoke('refreshInventory');
     },
 
     checkSteam() {
@@ -22,7 +22,7 @@ contextBridge.exposeInMainWorld('electron', {
     // User commands
     needUpdate() {
       return new Promise((resolve) => {
-        ipcRenderer.send('needUpdate');
+        ipcRenderer.invoke('needUpdate');
         ipcRenderer.once('needUpdate-reply', (evt, message) => {
           resolve(message);
         });
@@ -31,7 +31,7 @@ contextBridge.exposeInMainWorld('electron', {
     // User account
     getAccountDetails() {
       return new Promise((resolve) => {
-        ipcRenderer.send('electron-store-getAccountDetails');
+        ipcRenderer.invoke('electron-store-getAccountDetails');
         ipcRenderer.once(
           'electron-store-getAccountDetails-reply',
           (evt, message) => {
@@ -45,7 +45,7 @@ contextBridge.exposeInMainWorld('electron', {
     getPossibleOutcomes(resultsToGet) {
       console.log(resultsToGet);
       return new Promise((resolve) => {
-        ipcRenderer.send('getTradeUpPossible', resultsToGet);
+        ipcRenderer.invoke('getTradeUpPossible', resultsToGet);
         ipcRenderer.once('getTradeUpPossible-reply', (evt, message) => {
           console.log(message);
           resolve(message);
@@ -55,25 +55,25 @@ contextBridge.exposeInMainWorld('electron', {
 
     // Trade up
     tradeOrder(idsToProcess, idToUse) {
-      ipcRenderer.send('processTradeOrder', idsToProcess, idToUse);
+      ipcRenderer.invoke('processTradeOrder', idsToProcess, idToUse);
     },
     //
     setItemsPosition(dictToUse) {
-      ipcRenderer.send('setItemsPositions', dictToUse);
+      ipcRenderer.invoke('setItemsPositions', dictToUse);
     },
     //
     OpenContainer(listToUse) {
-      ipcRenderer.send('openContainer', listToUse);
+      ipcRenderer.invoke('openContainer', listToUse);
     },
 
     // User account
     deleteAccountDetails(username) {
-      ipcRenderer.send('electron-store-deleteAccountDetails', username);
+      ipcRenderer.invoke('electron-store-deleteAccountDetails', username);
     },
 
     // User account
     setAccountPosition(username, indexPosition) {
-      ipcRenderer.send(
+      ipcRenderer.invoke(
         'electron-store-setAccountPosition',
         username,
         indexPosition
@@ -81,14 +81,14 @@ contextBridge.exposeInMainWorld('electron', {
     },
 
     downloadFile(data) {
-      ipcRenderer.send('download', data);
+      ipcRenderer.invoke('download', data);
     },
     getPrice(itemRows) {
-      ipcRenderer.send('getPrice', itemRows);
+      ipcRenderer.invoke('getPrice', itemRows);
     },
     getCurrencyRate() {
       return new Promise((resolve) => {
-        ipcRenderer.send('getCurrency');
+        ipcRenderer.invoke('getCurrency');
         ipcRenderer.once('getCurrency-reply', (evt, message) => {
           console.log(message);
           resolve(message);
@@ -97,27 +97,27 @@ contextBridge.exposeInMainWorld('electron', {
     },
     // User commands
     retryConnection() {
-      ipcRenderer.send('retryConnection');
+      ipcRenderer.invoke('retryConnection');
     },
     // User commands
     logUserOut() {
-      ipcRenderer.send('signOut');
+      ipcRenderer.invoke('signOut');
     },
     // User commands
     handleWindowsActions(action_type) {
-      ipcRenderer.send('windowsActions', action_type);
+      ipcRenderer.invoke('windowsActions', action_type);
     },
 
     // Send Confirm Force
     forceLogin() {
-      ipcRenderer.send('forceLogin');
+      ipcRenderer.invoke('forceLogin');
     },
 
     startQRLogin(shouldRemember) {
       return new Promise((resolve) => {
         ipcRenderer.removeAllListeners('login-reply');
 
-        ipcRenderer.send('startQRLogin', shouldRemember);
+        ipcRenderer.invoke('startQRLogin', shouldRemember);
         ipcRenderer.once('login-reply', (event, arg) => {
           resolve(arg);
         });
@@ -125,7 +125,7 @@ contextBridge.exposeInMainWorld('electron', {
     },
 
     cancelQRLogin() {
-      ipcRenderer.send('cancelQRLogin');
+      ipcRenderer.invoke('cancelQRLogin');
     },
 
     // USER CONNECTIONS
@@ -149,7 +149,7 @@ contextBridge.exposeInMainWorld('electron', {
         clientjstoken = null;
       }
       return new Promise((resolve) => {
-        ipcRenderer.send(
+        ipcRenderer.invoke(
           'login',
           username,
           password,
@@ -183,7 +183,7 @@ contextBridge.exposeInMainWorld('electron', {
     // Commands
     renameStorageUnit(itemID, newName) {
       return new Promise((resolve) => {
-        ipcRenderer.send('renameStorageUnit', itemID, newName);
+        ipcRenderer.invoke('renameStorageUnit', itemID, newName);
 
         ipcRenderer.once('renameStorageUnit-reply', (event, arg) => {
           resolve(arg);
@@ -194,7 +194,7 @@ contextBridge.exposeInMainWorld('electron', {
     // Commands
     getStorageUnitData(itemID, storageName) {
       return new Promise((resolve) => {
-        ipcRenderer.send('getCasketContents', itemID, storageName);
+        ipcRenderer.invoke('getCasketContents', itemID, storageName);
 
         ipcRenderer.once('getCasketContent-reply', (event, arg) => {
           resolve(arg);
@@ -206,7 +206,7 @@ contextBridge.exposeInMainWorld('electron', {
     moveFromStorageUnit(casketID, itemID, fastMode) {
       // Create a promise that rejects in <ms> milliseconds
       let storageUnitResponse = new Promise((resolve) => {
-        ipcRenderer.send('removeFromStorageUnit', casketID, itemID, fastMode);
+        ipcRenderer.invoke('removeFromStorageUnit', casketID, itemID, fastMode);
 
         if (fastMode) {
           resolve(fastMode);
@@ -231,7 +231,7 @@ contextBridge.exposeInMainWorld('electron', {
     // Commands
     moveToStorageUnit(casketID, itemID, fastMode) {
       let storageUnitResponse = new Promise((resolve) => {
-        ipcRenderer.send('moveToStorageUnit', casketID, itemID, fastMode);
+        ipcRenderer.invoke('moveToStorageUnit', casketID, itemID, fastMode);
         if (fastMode) {
           resolve(fastMode);
         } else {
@@ -338,7 +338,7 @@ contextBridge.exposeInMainWorld('electron', {
         '-' +
         Math.random().toString(36).substr(2, 4);
       return new Promise((resolve) => {
-        ipcRenderer.send('electron-store-get', val, key);
+        ipcRenderer.invoke('electron-store-get', val, key);
 
         ipcRenderer.once('electron-store-get-reply' + key, (event, arg) => {
           console.log(arg);
@@ -347,7 +347,7 @@ contextBridge.exposeInMainWorld('electron', {
       });
     },
     set(property, val) {
-      ipcRenderer.send('electron-store-set', property, val);
+      ipcRenderer.invoke('electron-store-set', property, val);
     },
   },
 });
