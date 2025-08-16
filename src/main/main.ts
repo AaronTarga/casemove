@@ -26,6 +26,8 @@ import {
 import { login } from './helpers/classes/steam/steam';
 import { tradeUps } from './helpers/classes/steam/tradeup';
 import MenuBuilder from './menu';
+import { getGithubVersion } from './scripts/versionHelper';
+import { resolveHtmlPath } from './util';
 // import log from 'electron-log';
 import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
@@ -42,9 +44,39 @@ autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
 log.info('App starting...');
 
+app.on('ready', function () {
+  autoUpdater.checkForUpdatesAndNotify();
+});
+
 const find = require('find-process');
 
-
+autoUpdater.on('checking-for-update', () => {
+  sendUpdaterStatusToWindow('Checking for update...');
+});
+autoUpdater.on('update-available', (_info) => {
+  sendUpdaterStatusToWindow('Update available.');
+});
+autoUpdater.on('update-not-available', (_info) => {
+  sendUpdaterStatusToWindow('Update not available.');
+});
+autoUpdater.on('error', (err) => {
+  sendUpdaterStatusToWindow('Error in auto-updater. ' + err);
+});
+autoUpdater.on('download-progress', (progressObj) => {
+  let log_message = 'Download speed: ' + progressObj.bytesPerSecond;
+  log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+  log_message =
+    log_message +
+    ' (' +
+    progressObj.transferred +
+    '/' +
+    progressObj.total +
+    ')';
+  sendUpdaterStatusToWindow(log_message);
+});
+autoUpdater.on('update-downloaded', (_info) => {
+  sendUpdaterStatusToWindow('Update downloaded');
+});
 
 async function checkSteam(): Promise<{
   pid?: number;
@@ -92,6 +124,11 @@ const ClassLoginResponse = new LoginGenerator();
 
 // Electron stuff
 let mainWindow: BrowserWindow | null = null;
+ipcMain.on('ipc-example', async (event, arg) => {
+  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
+  console.log(msgTemplate(arg));
+  event.reply('ipc-example', msgTemplate('pong'));
+});
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -119,8 +156,9 @@ const installExtensions = async () => {
 };
 
 const createWindow = async () => {
-
-  currentLocale = app.getLocale();
+  if (isDevelopment) {
+    await installExtensions();
+  }
 
   const RESOURCES_PATH = app.isPackaged
     ? path.join(process.resourcesPath, 'assets')
@@ -136,6 +174,7 @@ const createWindow = async () => {
   }
 
   mainWindow = new BrowserWindow({
+    show: false,
     width: 1124,
     height: 850,
     minWidth: 1030,
@@ -144,7 +183,6 @@ const createWindow = async () => {
     icon: getAssetPath('icon.png'),
     webPreferences: {
       nodeIntegration: true, // is default value after Electron v5
-      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
       webSecurity: false,
       sandbox: false,
@@ -174,6 +212,10 @@ const createWindow = async () => {
     }
   });
 
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
+
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
 
@@ -188,37 +230,135 @@ const createWindow = async () => {
   }
 };
 
-app.on('ready',createWindow);
-
 /**
  * Add event listeners...
  */
 // Windows actions
 
+ipcMain.on('windowsActions', async (_event, message) => {
+  if (message == 'min') {
+    mainWindow?.minimize();
+  }
+  if (message == 'max') {
+    if (mainWindow?.isMaximized()) {
+      mainWindow.restore();
+    } else {
+      mainWindow?.maximize();
+    }
+  }
+  if (message == 'close') {
+    mainWindow?.close();
+  }
+});
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
+let currentLocale = 'da-dk';
+
 app.on('window-all-closed', () => {
+  // Respect the OSX convention of having the application in memory even
+  // after all windows have been closed
   if (process.platform !== 'darwin') {
     app.quit();
+    // localStorage.clear();
   }
 });
 
-app.on('activate', () => {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
-  }
-});
+let myWindow = null as any;
+const gotTheLock = app.requestSingleInstanceLock();
+const reactNombers = false;
 
+if (!gotTheLock) {
+  app.quit();
+} else {
+  app.on('second-instance', (_event, _commandLine, _workingDirectory) => {
+    // Someone tried to run a second instance, we should focus our window.
+    if (myWindow) {
+      if (myWindow.isMinimized()) myWindow.restore();
+      myWindow.focus();
+    }
+  });
+  app
+    .whenReady()
+    .then(async () => {
+      currentLocale = app.getLocale();
+      console.log('Currentlocal', currentLocale);
+
+      if (process.env.NODE_ENV === 'development' && reactNombers) {
+        let reactDevToolsPath = '';
+        // on windows
+        console.log(process.platform);
+        if (process.platform == 'win32') {
+          reactDevToolsPath = path.join(
+            os.homedir(),
+            '/AppData/Local/Google/Chrome/User Data/Default/Extensions/lmhkpmbekcpmknklioeibfkpmmfibljd/3.0.9_0'
+          );
+        }
+
+        // On linux
+        if (process.platform == 'linux') {
+          reactDevToolsPath = path.join(
+            os.homedir(),
+            '/.config/google-chrome/Default/Extensions/lmhkpmbekcpmknklioeibfkpmmfibljd/3.0.9_0'
+          );
+        }
+        // on macOS
+        if (process.platform == 'darwin') {
+          reactDevToolsPath = path.join(
+            os.homedir(),
+            '/Library/Application Support/Google/Chrome/Default/Extensions/lmhkpmbekcpmknklioeibfkpmmfibljd/3.0.9_0'
+          );
+        }
+
+        await session.defaultSession.loadExtension(reactDevToolsPath);
+      }
+      createWindow();
+      app.on('activate', () => {
+        // On macOS it's common to re-create a window in the app when the
+        // dock icon is clicked and there are no other windows open.
+        if (mainWindow === null) createWindow();
+      });
+    })
+    .catch(console.log);
+}
 
 /**
  * IPC...
  */
 
 var fetchItemClass = new fetchItems();
+
+// Version manager
+
+let gitHub = 0;
+ipcMain.on('needUpdate', async (event: any) => {
+  try {
+    if (gitHub == 0) {
+      getGithubVersion(process.platform).then((returnValue) => {
+        // Get the current version
+        const version = parseInt(
+          app.getVersion().toString().replaceAll('.', '')
+        );
+
+        // Check success status
+        let successStatus: boolean = false;
+        if (returnValue.version > version) {
+          successStatus = true;
+        } else {
+          successStatus = false;
+        }
+
+        // Send the event back back
+        event.reply('needUpdate-reply', {
+          requireUpdate: successStatus,
+          currentVersion: app.getVersion(),
+          githubResponse: returnValue,
+        });
+      });
+    }
+  } catch {
+    event.reply('needUpdate-reply', [false, app.getVersion(), 0]);
+    gitHub = 1;
+  }
+});
 
 // Return 1 = Success
 // Return 2 = Steam Guard
@@ -508,6 +648,11 @@ async function cancelLogin(user) {
   user.removeAllListeners('loginKey');
   user.removeAllListeners('steamGuard');
   user.removeAllListeners('error');
+}
+
+function sendUpdaterStatusToWindow(text) {
+  log.info(text);
+  mainWindow?.webContents.send('updater', [text]);
 }
 
 // Adds events listeners the user

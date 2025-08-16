@@ -11,10 +11,6 @@ export const mainConfig: Configuration = {
    * that runs in the main process.
    */
   entry: './src/main/main.ts',
-  // Put your normal webpack config below here
-  node: {
-        __dirname: true, // any value not work
-  },
   module: {
     rules,
   },
